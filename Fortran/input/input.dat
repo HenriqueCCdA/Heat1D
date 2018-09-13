@@ -1,0 +1,8 @@
+outpu data.out
+l     0.02
+ndiv  100
+dt    2.0
+nStep 100
+E     2 100000.0
+D     1  200.0
+t0    200.0
