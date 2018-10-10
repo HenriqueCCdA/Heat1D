@@ -10,8 +10,9 @@ c * ----------------------------------------------------------------- *
 c *********************************************************************      
       program heat
       implicit none
+      include 'Time.fi'
       character(len=80) nameOut, dum, name
-      real(8) lComp,dx,dt,ccv(2),t,temp0,h(2),prop(3)
+      real(8) lComp,dx,dt,ccv(2),t,temp0,h(2),prop(3)      
       integer nCells,nPoints,nDiv,i,j,cc(2),nStep
       integer, dimension(:,:), allocatable :: cells
       real(8), dimension(:), allocatable :: b,x,xc,cellTemp,nodeTemp,
@@ -19,6 +20,14 @@ c *********************************************************************
       real(8), dimension(:,:), allocatable :: a,aux
       integer nin  /11/
       integer nout1 /12/,nout2 /13/
+c .....................................................................
+c
+c ...
+      timeSolver = 0.d0
+      timeSist   = 0.d0
+      timeWres   = 0.d0
+c .....................................................................
+c
 c ...
       call readfile(lComp,nDiv,dt,nStep,cc,ccv,h,temp0,prop,nameOut,nin)
 c .....................................................................
@@ -62,13 +71,17 @@ c ...
 c ...................................................................
 c
 c ...  escrita da coordenada do centroide
+      time0 = get_wtime()
       call res(0,0.d0,xc,nCells,nout1)
       call res(0,0.d0,x,nPoints,nout2)
+      timeWres = timeWres + get_wtime() - time0
 c ...................................................................
 c
 c ...  escrita da temperatura inicial
+      time0 = get_wtime()
       call res(0,0.d0,cellTemp,nCells ,nout1)
       call res(0,0.d0,nodeTemp,nPoints,nout2)
+      timeWres = timeWres + get_wtime() - time0
 c ...................................................................
 c
 c ...
@@ -86,13 +99,17 @@ c ...................................................................
 c
 c ...
 c       write(*,*)'Assembly of the matrix system :'
+        time0 = get_wtime()
         call montaSistema(a,b,cellTemp,sQ,k,ro,cp,dt,cc,ccv,h,dx,nCells)
+        timeSist = timeSist + get_wtime() - time0
 c ...................................................................     
 
 c ... Ax = B
 c       write(*,*)'Ax=b :'
+        time0 = get_wtime()
         call tdma_solver2(a(1,1),a(1,2),a(1,3),b,cellTemp
      .                   ,aux(1,1),aux(1,2),nCells)
+        timeSolver = timeSolver + get_wtime() - time0
 c ...................................................................
 c
 c ...
@@ -102,14 +119,20 @@ c ...................................................................
 c
 c ... 
 c       write(*,*)'Write res :'
+        time0 = get_wtime()
         call res(j,t,cellTemp,nCells ,nout1)
         call res(j,t,nodeTemp,nPoints,nout2)
+        timeWres = timeWres + get_wtime() - time0
 c ...................................................................
       enddo
 c ...................................................................
 c
 c ...
       write(*,'(20a)')'done.'
+c ...................................................................
+c
+c ...
+      write(*,10)timeSist,timeSolver,timeWres
 c ...................................................................
 c
 c ...
@@ -125,6 +148,9 @@ c ...
       close(nout2)
 c ......................................................................
       stop
+   10 format(/,'Time Sist(s)   : ', f10.4,/
+     1        ,'Time Solver(s) : ', f10.4,/
+     2        ,'Time Wres(s)   : ', f10.4,/)
       end
 c *********************************************************************
 c
@@ -167,7 +193,7 @@ c *********************************************************************
 c
 c *********************************************************************
 c * DATA DE CRIACAO  : 16/09/2018                                     *
-c * DATA DE MODIFICAO: 00/00/0000                                     *
+c * DATA DE MODIFICAO: 10/10/2018                                     *
 c * ----------------------------------------------------------------- *
 c * NODALINTPERPOL: interla os valores das celulas para o no          *
 c * ----------------------------------------------------------------- *
@@ -177,6 +203,7 @@ c * cells- conetividade nodal das celulas                             *
 c * cc     - tipo de condicao de contorno                             * 
 c         1 - Temperatuta                                             *
 c         2 - fluxo                                                   *
+c         3 - resfriamento de newton                                  *
 c * ccv    - valor numerico da condicao de contorno                   *
 c * cellTemp - valores nas celulas                                    *
 c * nodeTemp - nao definido                                           *
@@ -293,6 +320,7 @@ c * dt     - delta t                                                  *
 c * cc     - tipo de condicao de contorno                             * 
 c         1 - Temperatuta                                             *
 c         2 - fluxo                                                   *
+c         3 - resfriamento de newton                                  *
 c * ccv    - valor numerico da condicao de contorno                   *
 c * dx     - delta x                                                  *
 c * nCells - numero de celulas (elementos)                            * 

@@ -204,10 +204,10 @@ c ...
 c ...
       write(*,'(a)')'***********************************************'
       write(*,'(a,f16.6)')'lComp :',lComp
-      write(*,'(a,f16.6)')'nDiv  :',nDiv
+      write(*,'(a,i16)')'nDiv  :',nDiv
       write(*,'(a,f16.6)')'dt    :',dt
       write(*,'(a,f16.6)')'dx    :',lComp/nDiv
-      write(*,'(a,i8)')  'step  :',nStep
+      write(*,'(a,i16)')  'step  :',nStep
       write(*,'(a,i4,1x,f16.6,1x,f16.6)')'cce   :',cc(1),ccv(1),h(1)
       write(*,'(a,i4,1x,f16.6,1x,f16.6)')'ccd   :',cc(2),ccv(2),h(2)
       write(*,'(a,f16.6)')'Temp0 :',temp0
