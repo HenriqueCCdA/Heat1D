@@ -1,6 +1,6 @@
 c *********************************************************************
 c * DATA DE CRIACAO  : 11/09/2018                                     *
-c * DATA DE MODIFICAO: 13/09/2018                                     *
+c * DATA DE MODIFICAO: 16/09/2018                                     *
 c * ----------------------------------------------------------------- *
 c * REAFILE : leitura dos arquivos de dados                           *
 c * ----------------------------------------------------------------- *
@@ -27,25 +27,29 @@ c *       2 - fluxo                                                   *
 c *       3 - lei de resfriamento de newton                           *
 c * ccv     - calor da condicao de contorno                           *
 c * temp0   - temperatura inicial                                     *
+c * prop    - proriedades do material                                 *
+c *         1 - condutividade termica                                 *
+c *         2 - massa especifica                                      *
+c *         3 - calor especifico                                      *
 c * nameOut - nome do arquivo de saida                                *
 c * ----------------------------------------------------------------- *
 c * OBS:                                                              *
 c * ----------------------------------------------------------------- *
 c *********************************************************************
-      subroutine readfile(lComp,nDiv,dt,nStep,cc,ccv,h,temp0,nameOut
-     1                   ,nin)
+      subroutine readfile(lComp,nDiv,dt,nStep,cc,ccv,h,temp0,prop
+     .                   ,nameOut,nin)
       implicit none
       include 'string.fi'
       logical flag
       character(len=80) nameOut, dum
       character(len=15) rc,macro(36),string
       integer nDiv,nStep,cc(2),nin,j,nmc,ier,maxLine
-      real(8) dt,ccv(2),lComp,temp0,h(2)
+      real(8) dt,ccv(2),lComp,temp0,h(2),prop(3)
 c ......................................................................
       data macro/'end            ','output         ','lenth          ',
      1           'ndiv           ','dt             ','nstep          ',
      2           'cce            ','ccd            ','initialt       ',
-     3           '               ','               ','               ',
+     3           'prop           ','               ','               ',
      4           '               ','               ','               ',
      5           '               ','               ','               ',
      6           '               ','               ','               ',
@@ -167,6 +171,24 @@ c ...
           read(string, *, err=200,end = 200) temp0   
 c .......................................................................
 c
+c .......................................................................
+c
+c ...
+        else if(rc .eq. macro(10)) then
+c ... k
+          call readmacro(nin,.false.,ier)
+          write(string,'(15a)') (word(j),j=1,15) 
+          read(string, *, err=200,end = 200) prop(1)  
+c ... ro
+          call readmacro(nin,.false.,ier)
+          write(string,'(15a)') (word(j),j=1,15) 
+          read(string, *, err=200,end = 200) prop(2)  
+c ... cp
+          call readmacro(nin,.false.,ier)
+          write(string,'(15a)') (word(j),j=1,15) 
+          read(string, *, err=200,end = 200) prop(3)  
+c .......................................................................
+c
 c ...
         else if(maxLine .ge. 100) then
           print*,'*** Numero de linhas maxima no arquivo de entrada ' 
@@ -184,10 +206,14 @@ c ...
       write(*,'(a,f16.6)')'lComp :',lComp
       write(*,'(a,f16.6)')'nDiv  :',nDiv
       write(*,'(a,f16.6)')'dt    :',dt
+      write(*,'(a,f16.6)')'dx    :',lComp/nDiv
       write(*,'(a,i8)')  'step  :',nStep
       write(*,'(a,i4,1x,f16.6,1x,f16.6)')'cce   :',cc(1),ccv(1),h(1)
       write(*,'(a,i4,1x,f16.6,1x,f16.6)')'ccd   :',cc(2),ccv(2),h(2)
       write(*,'(a,f16.6)')'Temp0 :',temp0
+      write(*,'(a,f16.6)')'k     :',prop(1)
+      write(*,'(a,f16.6)')'ro    :',prop(2)
+      write(*,'(a,f16.6)')'cp    :',prop(3)
       write(*,'(a)')'***********************************************'
 c .....................................................................
 c

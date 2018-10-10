@@ -1,24 +1,26 @@
+c *********************************************************************
+c * DATA DE CRIACAO  : 01/09/2018                                     *
+c * DATA DE MODIFICAO: 00/00/0000                                     *
+c * ----------------------------------------------------------------- *
+c * heat: Programa de volume finitos para equacao do calor 1d         *
+c * ----------------------------------------------------------------- *
+c * ----------------------------------------------------------------- *
+c * OBS:                                                              *
+c * ----------------------------------------------------------------- *
+c *********************************************************************      
       program heat
       implicit none
-      character(len=80) nameOut, dum
-      real(8) lComp,dx,dt,ccv(2),t,temp0
+      character(len=80) nameOut, dum, name
+      real(8) lComp,dx,dt,ccv(2),t,temp0,h(2),prop(3)
       integer nCells,nPoints,nDiv,i,j,cc(2),nStep
       integer, dimension(:,:), allocatable :: cells
-      real(8), dimension(:), allocatable :: b,x,xc,temp,k,ro,cp,sQ
+      real(8), dimension(:), allocatable :: b,x,xc,cellTemp,nodeTemp,
+     .                                      k,ro,cp,sQ
       real(8), dimension(:,:), allocatable :: a,aux
       integer nin  /11/
-      integer nout /12/
+      integer nout1 /12/,nout2 /13/
 c ...
-      nStep = 100
-      nDiv  = 10
-      lComp = 2.0d-02
-      dt    = 2.d0
-      t     = 0.d0
-      temp0 = 200.d0
-c .....................................................................
-c
-c ...
-      call readfile(lComp,nDiv,dt,nStep,cc,ccv,temp0,nameOut,nin)
+      call readfile(lComp,nDiv,dt,nStep,cc,ccv,h,temp0,prop,nameOut,nin)
 c .....................................................................
 c
 c ....
@@ -27,9 +29,11 @@ c ....
 c .....................................................................
 c
 c ...
-      allocate(b(nCells),x(nPoints),xc(nCells),temp(nCells),k(nCells)
-     1        ,ro(nCells),cp(nCells),a(nCells,3),aux(nCells,2)
-     2        ,cells(2,nCells),sQ(nCells))
+      allocate(b(nCells)       , x(nPoints), xc(nCells)
+     1       , cellTemp(nCells), nodeTemp(nPoints)
+     2       , k(nCells)       , ro(nCells), cp(nCells)
+     3       , a(nCells,3)     , aux(nCells,2)
+     4       , cells(2,nCells) , sQ(nCells))
 c .....................................................................
 c
 c .... gera o gride
@@ -37,115 +41,90 @@ c .... gera o gride
 c ....................................................................
 c
 c ...
-      k(1:nCells)    = 10.d0
-      ro(1:nCells)   = 1000.d0
-      cp(1:nCells)   = 10000.d0
-      temp(1:nCells) = temp0
-      sQ(1:nCells)   = 0.d0
+      t                  = 0.d0
+      k(1:nCells)        = prop(1)
+      ro(1:nCells)       = prop(2)
+      cp(1:nCells)       = prop(3)
+      cellTemp(1:nCells) = temp0
+      sQ(1:nCells)       = 0.d0
 c ....................................................................      
 c
 c ...
-      open(unit=nout,FILE=nameOut)
+      name = trim(nameOut) // '_cell.out'
+      open(unit=nout1,FILE=name)
+      name = trim(nameOut) // '_node.out'
+      open(unit=nout2,FILE=name)
 c ....................................................................
 c
+c ...
+      call nodalInterpol(cells,cc,ccv,cellTemp,nodeTemp,nCells
+     .                  ,nPoints)
+c ...................................................................
+c
 c ...  escrita da coordenada do centroide
-      call res(0,0.d0,xc,nCells,nout)
+      call res(0,0.d0,xc,nCells,nout1)
+      call res(0,0.d0,x,nPoints,nout2)
 c ...................................................................
 c
 c ...  escrita da temperatura inicial
-      call res(0,0.d0,temp,nCells,nout)
+      call res(0,0.d0,cellTemp,nCells ,nout1)
+      call res(0,0.d0,nodeTemp,nPoints,nout2)
+c ...................................................................
+c
+c ...
+      write(*,'(20a)')'Running ...'
 c ...................................................................
 c
 c ...
       do j = 1, nStep
-
+c
+c ... 
+c       write(*,'(a10,1x,i9)')'Step :', j
+c       write(*,'(a10,1x,f9.4)')'Time(s) :',t
+        t = t + dt
+c ...................................................................
+c
 c ...
-        call montaSistema(a,b,temp,sQ,k,ro,cp,dt,cc,ccv,dx,nCells)
+c       write(*,*)'Assembly of the matrix system :'
+        call montaSistema(a,b,cellTemp,sQ,k,ro,cp,dt,cc,ccv,h,dx,nCells)
 c ...................................................................     
 
 c ... Ax = B
-        call tdma_solver2(a(1,1),a(1,2),a(1,3),b,temp
+c       write(*,*)'Ax=b :'
+        call tdma_solver2(a(1,1),a(1,2),a(1,3),b,cellTemp
      .                   ,aux(1,1),aux(1,2),nCells)
 c ...................................................................
 c
 c ...
-        t = t + dt
-        print*,'Time(s)',t
+        call nodalInterpol(cells,cc,ccv,cellTemp,nodeTemp,nCells
+     .                    ,nPoints)
 c ...................................................................
 c
 c ... 
-        call res(j,t,temp,nCells,nout)
+c       write(*,*)'Write res :'
+        call res(j,t,cellTemp,nCells ,nout1)
+        call res(j,t,nodeTemp,nPoints,nout2)
 c ...................................................................
       enddo
 c ...................................................................
 c
 c ...
-      deallocate(b,x,xc,temp,k,ro,cp,a,aux)
+      write(*,'(20a)')'done.'
 c ...................................................................
 c
 c ...
-      close(nout)
+      deallocate(b,x,xc
+     1          ,cellTemp,nodeTemp
+     2          ,k       ,ro      ,cp
+     3          ,a       ,aux
+     4          ,cells   ,sQ)
+c ...................................................................
+c
+c ...
+      close(nout1)
+      close(nout2)
 c ......................................................................
       stop
-      end
-c *********************************************************************
-c
-c *********************************************************************
-c * DATA DE CRIACAO  : 11/09/2018                                     *
-c * DATA DE MODIFICAO: 00/00/0000                                     *
-c * ----------------------------------------------------------------- *
-c * REAFILE : leitura dos arquivos de dados                           *
-c * ----------------------------------------------------------------- *
-c * Parametros de entrada:                                            *
-c * ----------------------------------------------------------------- *
-c * lComp   - nao definido                                            *
-c * nDiv    - nao definido                                            *
-c * dt      - nao definido                                            *
-c * nStep   - nao definido                                            *
-c * cc      - nao definido                                            *
-c * ccv     - nao definido                                            *
-c * temp0   - nao definido                                            *
-c * nameOut - nao definido                                            *
-c * ----------------------------------------------------------------- *
-c * Parametros de saida:                                              *
-c * ----------------------------------------------------------------- *
-c * lComp   - comprimento da barra                                    *
-c * nDiv    - numero de divisoes                                      *
-c * dt      - delta                                                   *
-c * nStep   - numero de passo de tempo                                *
-c * cc      - tipo de condicao de contorno                            *
-c         1 - Temperatuta                                             *
-c         2 - fluxo                                                   *
-c * ccv     - calor da condicao de contorno                           *
-c * temp0   - temperatura inicial                                     *
-c * nameOut - nome do arquivo de saida                                *
-c * ----------------------------------------------------------------- *
-c * OBS:                                                              *
-c * ----------------------------------------------------------------- *
-c *********************************************************************
-      subroutine readfile(lComp,nDiv,dt,nStep,cc,ccv,temp0,nameOut,nin)
-      implicit none
-      character(len=80) nameOut, dum
-      integer nDiv,nStep,cc(2),nin
-      real*8 dt,ccv(2),lComp,temp0
-c ...
-      open(unit=nin,file='input.dat')
-      read(nin,*) dum,nameOut
-      read(nin,*) dum,lComp
-      read(nin,*) dum,nDiv
-      read(nin,*) dum,dt
-      read(nin,*) dum,nStep
-      read(nin,*) dum,cc(1),ccv(1)
-      read(nin,*) dum,cc(2),ccv(2)
-      read(nin,*) dum,temp0      
-      close(nin)
-
-      print*,lComp,nDiv,dt,nStep
-      print*,cc(1),ccv(1)
-      print*,cc(2),ccv(2)
-      print*,temp0
-      close(nin)
-      return
       end
 c *********************************************************************
 c
@@ -177,10 +156,67 @@ c ...
 c ...  coordenada do centroide    
       write(nout,'(i9,1x,f10.4)',advance='no')step,t
       do i = 1, n
-        write(nout,'(1x,f10.4,1x)',advance='no')u(i)
+        write(nout,'(1x,e22.15,1x)',advance='no')u(i)
       enddo
 c .....................................................................      
       write(nout,*)
+      return
+      end
+c .....................................................................
+c *********************************************************************
+c
+c *********************************************************************
+c * DATA DE CRIACAO  : 16/09/2018                                     *
+c * DATA DE MODIFICAO: 00/00/0000                                     *
+c * ----------------------------------------------------------------- *
+c * NODALINTPERPOL: interla os valores das celulas para o no          *
+c * ----------------------------------------------------------------- *
+c * Parametros de entrada:                                            *
+c * ----------------------------------------------------------------- *
+c * cells- conetividade nodal das celulas                             *
+c * cc     - tipo de condicao de contorno                             * 
+c         1 - Temperatuta                                             *
+c         2 - fluxo                                                   *
+c * ccv    - valor numerico da condicao de contorno                   *
+c * cellTemp - valores nas celulas                                    *
+c * nodeTemp - nao definido                                           *
+c * nCells   - numero de celulas                                      *
+c * nPoints  - numero de pontos                                       *
+c * ----------------------------------------------------------------- *
+c * Parametros de saida:                                              *
+c * ----------------------------------------------------------------- *
+c * nodeTemp - valores nos pontos                                     *
+c * ----------------------------------------------------------------- *
+c * OBS:                                                              *
+c * ----------------------------------------------------------------- *
+c *********************************************************************
+      subroutine nodalInterpol(cells,cc,ccv,cellTemp,nodeTemp,nCells
+     .                        ,nPoints)
+      implicit none
+      integer nCells,nPoints,cells(2,*),cc(2),i
+      real(8) cellTemp(*),nodeTemp(*),no1,no2,tmp,ccv(2)
+c ...
+      nodeTemp(1:nPoints) = 0.d0
+c ...
+      do i = 1, nCells
+        no1           = cells(1,i)
+        no2           = cells(2,i)
+        tmp           = cellTemp(i)
+        nodeTemp(no1) = nodeTemp(no1) + tmp
+        nodeTemp(no2) = nodeTemp(no2) + tmp
+      enddo
+c .....................................................................      
+c
+c ...   
+      do i = 2, nPoints - 1
+        nodeTemp(i) = nodeTemp(i)*0.5d0
+      enddo
+c .....................................................................
+c
+c ...
+      if (cc(1) .eq. 1) nodeTemp(1)       = ccv(1)
+      if (cc(2) .eq. 1) nodeTemp(nPoints) = ccv(2)
+c .....................................................................
       return
       end
 c .....................................................................
@@ -269,11 +305,12 @@ c * ----------------------------------------------------------------- *
 c * OBS:                                                              *
 c * ----------------------------------------------------------------- *
 c *********************************************************************
-      subroutine  montaSistema(a,b,temp,sQ,k,ro,cp,dt,cc,ccv,dx,nCells)
+      subroutine  montaSistema(a,b,temp,sQ,k,ro,cp,dt,cc,ccv,h,dx
+     1                        ,nCells)
       implicit none
       integer cc(2),nCells,i
       real(8) a(nCells,*),b(*),k(*),ro(*),cp(*),temp(*),sQ(*)
-      real(8) dt,ccv(2),dx,sP,sU,kf
+      real(8) dt,ccv(2),dx,sP,sU,kf,tmp,h(2)
       real(8) aE,aW,aP0
 c ... temperatura prescrita
       if(cc(1) .eq. 1) then
@@ -305,6 +342,24 @@ c ... E
         a(1,3) = -aE
 c ...
         b(1)   = sU + aP0*temp(1)
+c ... lei de resfriamento de newton
+      else if(cc(1) .eq. 3) then
+        tmp    = 1.0d0 + (h(1)*2.0*dx)/k(1)
+        tmp    = h(1)/tmp
+        aP0    = ro(1)*cp(1)*dx/dt
+        sU     = tmp*ccv(1)
+        sP     = -tmp   
+        kf     = (k(1)+k(2))*0.5d0
+        aE     = kf/dx
+c ... W
+        a(1,1) = 0.0
+c ... P
+        a(1,2) = aP0 + aE - sP
+c ... E
+        a(1,3) = -aE
+c ...
+        b(1)   = sU + aP0*temp(1)
+
       endif
 c .....................................................................
 
@@ -329,7 +384,24 @@ c ... fluxo prescrito
         sU     = -ccv(2)
         sP     = 0.0
         kf     = (k(nCells-1)+k(nCells))*0.5d0
-        aE     = kf/dx
+        aW     = kf/dx
+c ... W
+        a(nCells,1) = -aW
+c ... P
+        a(nCells,2) = aP0 + aW - sP
+c ... E
+        a(nCells,3) = 0.0
+c ...
+        b(nCells)   = sU + aP0*temp(nCells)
+c ... lei de resfriamento de newton
+      else if(cc(2) .eq. 3) then
+        tmp    = 1.0d0 + (h(2)*2.0*dx)/k(nCells)
+        tmp    = h(2)/tmp
+        aP0    = ro(nCells)*cp(nCells)*dx/dt
+        sU     = tmp*ccv(2)
+        sP     = -tmp   
+        kf     = (k(nCells-1)+k(nCells))*0.5d0
+        aW     = kf/dx
 c ... W
         a(nCells,1) = -aW
 c ... P

@@ -1,8 +1,9 @@
-outpu data.out
-l     0.02
+output data_newton.out
+lenth 0.02
 ndiv  100
 dt    2.0
-nStep 100
-E     2 100000.0
-D     1  200.0
-t0    200.0
+nstep 500
+cce   3   20.0 200.0
+ccd   3    0.0 200.0
+initialt  10.0
+end
