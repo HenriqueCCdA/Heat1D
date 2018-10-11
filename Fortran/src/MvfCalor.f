@@ -64,8 +64,8 @@ c ...
       open(unit=nout1,FILE=name)
       name = trim(nameOut) // '_node.out'
       open(unit=nout2,FILE=name)
-      name = trim(nameOut) // '_ex.out'
-      open(unit=nout3,FILE=name)
+c      name = trim(nameOut) // '_ex.out'
+c      open(unit=nout3,FILE=name)
 c ....................................................................
 c
 c ...
@@ -77,7 +77,7 @@ c ...  escrita da coordenada do centroide
       time0 = get_wtime()
       call res(0,0.d0,xc,nCells,nout1)
       call res(0,0.d0,x,nPoints,nout2)
-      call res(0,0.d0,x,nPoints,nout3)
+c      call res(0,0.d0,x,nPoints,nout3)
       timeWres = timeWres + get_wtime() - time0
 c ...................................................................
 c
@@ -89,8 +89,8 @@ c ...  escrita da temperatura inicial
       time0 = get_wtime()
       call res(0,0.d0,cellTemp,nCells ,nout1)
       call res(0,0.d0,nodeTemp,nPoints,nout2)
-      call res(0,0.d0,ye      ,nPoints,nout3)
-      call derr(ye,nodeTemp,nPoints)
+c      call res(0,0.d0,ye      ,nPoints,nout3)
+c      call derr(ye,nodeTemp,nPoints)
       timeWres = timeWres + get_wtime() - time0
 c ...................................................................
 c
@@ -136,8 +136,8 @@ c       write(*,*)'Write res :'
         time0 = get_wtime()
         call res(j,t,cellTemp,nCells ,nout1)
         call res(j,t,nodeTemp,nPoints,nout2)
-        call res(j,t,ye      ,nPoints,nout3)
-        call derr(ye,nodeTemp,nPoints)
+c        call res(j,t,ye      ,nPoints,nout3)
+c        call derr(ye,nodeTemp,nPoints)
         timeWres = timeWres + get_wtime() - time0
 c ...................................................................
       enddo
@@ -162,7 +162,7 @@ c
 c ...
       close(nout1)
       close(nout2)
-      close(nout3)
+c      close(nout3)
 c ......................................................................
       stop
    10 format(/,'Time Sist(s)   : ', f10.4,/
