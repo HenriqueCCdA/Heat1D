@@ -17,9 +17,10 @@ c *********************************************************************
       integer, dimension(:,:), allocatable :: cells
       real(8), dimension(:), allocatable :: b,x,xc,cellTemp,nodeTemp,
      .                                      k,ro,cp,sQ
+      real(8), dimension(:), allocatable :: ye
       real(8), dimension(:,:), allocatable :: a,aux
       integer nin  /11/
-      integer nout1 /12/,nout2 /13/
+      integer nout1 /12/,nout2 /13/, nout3 /14/
 c .....................................................................
 c
 c ...
@@ -42,7 +43,7 @@ c ...
      1       , cellTemp(nCells), nodeTemp(nPoints)
      2       , k(nCells)       , ro(nCells), cp(nCells)
      3       , a(nCells,3)     , aux(nCells,2)
-     4       , cells(2,nCells) , sQ(nCells))
+     4       , cells(2,nCells) , sQ(nCells), ye(nPoints))
 c .....................................................................
 c
 c .... gera o gride
@@ -63,6 +64,8 @@ c ...
       open(unit=nout1,FILE=name)
       name = trim(nameOut) // '_node.out'
       open(unit=nout2,FILE=name)
+      name = trim(nameOut) // '_ex.out'
+      open(unit=nout3,FILE=name)
 c ....................................................................
 c
 c ...
@@ -74,13 +77,20 @@ c ...  escrita da coordenada do centroide
       time0 = get_wtime()
       call res(0,0.d0,xc,nCells,nout1)
       call res(0,0.d0,x,nPoints,nout2)
+      call res(0,0.d0,x,nPoints,nout3)
       timeWres = timeWres + get_wtime() - time0
 c ...................................................................
 c
+c ...
+      call solExt(x,ye,t,dsqrt(k(1)/ro(1)*cp(1)),lComp,nPoints)
+c ...................................................................
+c 
 c ...  escrita da temperatura inicial
       time0 = get_wtime()
       call res(0,0.d0,cellTemp,nCells ,nout1)
       call res(0,0.d0,nodeTemp,nPoints,nout2)
+      call res(0,0.d0,ye      ,nPoints,nout3)
+      call derr(ye,nodeTemp,nPoints)
       timeWres = timeWres + get_wtime() - time0
 c ...................................................................
 c
@@ -116,12 +126,18 @@ c ...
         call nodalInterpol(cells,cc,ccv,cellTemp,nodeTemp,nCells
      .                    ,nPoints)
 c ...................................................................
+c 
+c ...
+        call solExt(x,ye,t,dsqrt(k(1)/ro(1)*cp(1)),lComp,nPoints)
+c ...................................................................
 c
 c ... 
 c       write(*,*)'Write res :'
         time0 = get_wtime()
         call res(j,t,cellTemp,nCells ,nout1)
         call res(j,t,nodeTemp,nPoints,nout2)
+        call res(j,t,ye      ,nPoints,nout3)
+        call derr(ye,nodeTemp,nPoints)
         timeWres = timeWres + get_wtime() - time0
 c ...................................................................
       enddo
@@ -140,12 +156,13 @@ c ...
      1          ,cellTemp,nodeTemp
      2          ,k       ,ro      ,cp
      3          ,a       ,aux
-     4          ,cells   ,sQ)
+     4          ,cells   ,sQ      ,ye)
 c ...................................................................
 c
 c ...
       close(nout1)
       close(nout2)
+      close(nout3)
 c ......................................................................
       stop
    10 format(/,'Time Sist(s)   : ', f10.4,/
