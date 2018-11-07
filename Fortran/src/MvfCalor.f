@@ -60,9 +60,9 @@ c ...
 c ....................................................................      
 c
 c ...
-      name = trim(nameOut) // '_cell.out'
+      name = trim(nameOut) // '_cell.fortran'
       open(unit=nout1,FILE=name)
-      name = trim(nameOut) // '_node.out'
+      name = trim(nameOut) // '_node.fortran'
       open(unit=nout2,FILE=name)
 c      name = trim(nameOut) // '_ex.out'
 c      open(unit=nout3,FILE=name)

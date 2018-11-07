@@ -1,6 +1,6 @@
 c *********************************************************************
 c * DATA DE CRIACAO  : 11/09/2018                                     *
-c * DATA DE MODIFICAO: 16/09/2018                                     *
+c * DATA DE MODIFICAO: 07/11/2018                                     *
 c * ----------------------------------------------------------------- *
 c * REAFILE : leitura dos arquivos de dados                           *
 c * ----------------------------------------------------------------- *
@@ -46,7 +46,7 @@ c *********************************************************************
       integer nDiv,nStep,cc(2),nin,j,nmc,ier,maxLine
       real(8) dt,ccv(2),lComp,temp0,h(2),prop(3)
 c ......................................................................
-      data macro/'end            ','output         ','lenth          ',
+      data macro/'end            ','output         ','length         ',
      1           'ndiv           ','dt             ','nstep          ',
      2           'cce            ','ccd            ','initialt       ',
      3           'prop           ','               ','               ',
