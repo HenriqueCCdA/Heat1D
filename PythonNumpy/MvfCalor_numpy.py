@@ -37,6 +37,11 @@ def main():
     sQ = np.zeros(nCells, dtype = float)
 
     a  = np.zeros((nCells,3), dtype = float)
+#    u = np.zeros(nCells, dtype = float)
+#    d = np.zeros(nCells, dtype = float)
+#    l = np.zeros(nCells, dtype = float) 
+
+
     b  = np.zeros(nCells, dtype = float)
 
     nodeTemp = np.zeros(nPoints, dtype = float)
@@ -79,27 +84,30 @@ def main():
         time0 = tm.time()
         si.montaSistema(a, b,  cellTemp, sQ, k, ro, cp, dt , cc,\
                         dx, nCells)
+#        si.montaSistema_v2(l, d, u, b,  cellTemp, sQ, k, ro, cp, dt , cc,\
+#                        dx, nCells)
         timeSist += tm.time() - time0
         # .............................................................
 
         # ... Ax = B
         time0 = tm.time()
         trn.tdma_solver1_numpy(a, b, cellTemp, nCells)
+#        trn.tdma_solver3_numpy(l, d, u, b, cellTemp, nCells)
         timeSolver += tm.time() - time0
         # .............................................................
 
         # ...
         gr.nodalInterpol(cells, cc, cellTemp, nodeTemp, nCells, nPoints)
-        # ..............................................................
+        # ................................1.................................
 
         # ... temperatura inicial
         time0 = tm.time()
         gr.res(j, t, cellTemp, nCells, fileResCell)
         gr.res(j, t, nodeTemp, nPoints, fileResNode)
         timeWres += tm.time() - time0
-        # .............................................................
+        # .................................................................
 
-    # ..................................................................
+    # .................................................................
 
     # ...
     print("done.")
