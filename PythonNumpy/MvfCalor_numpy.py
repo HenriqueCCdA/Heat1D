@@ -1,13 +1,13 @@
 import Tridiagonal_numpy as trn
 import ReadFile as rf
 import Sistema as si
-import Grid as gr
+import Grid_numpy as gr
 import time as tm
 import numpy as np
 
 def main():
 
-    filesInf = rf.readFile()
+    filesInf = rf.readFile(fileName="../input/input.dat")
 
     # ...
     nCells = filesInf['ndiv']

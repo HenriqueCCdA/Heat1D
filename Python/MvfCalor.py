@@ -7,7 +7,7 @@ import time as tm
 
 def main():
 
-    filesInf = rf.readFile()
+    filesInf = rf.readFile(fileName="../input/input.dat")
 
     # ...
     nCells = filesInf['ndiv']

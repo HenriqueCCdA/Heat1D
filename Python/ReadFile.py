@@ -1,7 +1,7 @@
 """
 *********************************************************************
 * DATA DE CRIACAO  : 07/11/2018                                     *
-* DATA DE MODIFICAO: 00/00/0000                                     *
+* DATA DE MODIFICAO: 07/04/2021                                     *
 * ----------------------------------------------------------------- *
 * READFILE: leitura do arquivo de entrada                           *
 * ----------------------------------------------------------------- *
@@ -24,9 +24,7 @@
 """
 
 
-def readFile():
-
-    fileName = 'input.dat'
+def readFile(fileName ='inout.dat'):
 
     macros = ['output', 'length', 'ndiv', 'dt', 'nstep', 'initialt',\
               'prop', 'cce', 'ccd', 'end']
