@@ -1,0 +1,10 @@
+output prob
+length 50.0
+ndiv  100
+dt    5.0
+nstep 1000
+cce   1  10.0 
+ccd   2  -1.5
+initialt 20.0
+prop 1.0 1.0 1.0
+end
