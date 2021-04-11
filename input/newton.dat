@@ -4,7 +4,7 @@ ndiv  100
 dt    5.0
 nstep 1000
 cce   1  10.0 
-ccd   3  100.0 1.0
+ccd   3  30.0 1.0
 initialt 20.0
 prop 1.0 1.0 1.0
 end

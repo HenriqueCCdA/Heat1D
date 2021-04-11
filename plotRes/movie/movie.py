@@ -45,18 +45,21 @@ for i in range(1,time_steps - 1):
     
     
 fig = plt.figure()
-ax = plt.axes(xlim=(x_min, x_max), ylim = (temp_min, temp_max))
-annotation = ax.annotate('t = 0.0 s', xy=(50, 200), xycoords="axes points")
+ax = plt.axes(xlim=(x_min, x_max), ylim = (temp_min - 10, temp_max + 10))
+annotation = ax.annotate('t = 0.0 s', xy=(25, 200), xycoords="axes points")
+ax.hlines(temp_min, 0, 50, color = 'gray', ls='--')
+ax.hlines(temp_max, 0, 50, color = 'gray', ls='--')
 annotation.set_animated(True)
 
 line, = ax.plot([], [])
 plt.title('Temperatura ao longo da barra')
 plt.xlabel('x (m)')
-plt.ylabel('Temperatua(°C)')    
+plt.ylabel('Temperatua(°C)') 
+   
 
 
-#anim = FuncAnimation(fig, animate, frames = None, init_func=init, interval = 1, save_count=time_steps)
-anim = FuncAnimation(fig, animate, frames = None, init_func=init, interval = 10, save_count=200)
+anim = FuncAnimation(fig, animate, frames = None, init_func=init, interval = 1, save_count=time_steps)
+#anim = FuncAnimation(fig, animate, frames = None, init_func=init, interval = 10, save_count=200)
  
 
 anim.save('movie.gif')
