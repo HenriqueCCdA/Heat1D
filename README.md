@@ -7,7 +7,18 @@ Solução do equação do calor utilizando o método dos volumes finitos para pr
 * Python (puro)
 * Python (numpy)
 
-#Resultados
+# Resultados
+
+## Temperatura prescrita
+
+![Temperatura](https://github.com/HenriqueCCdA/VolumeFinito/blob/master/gifs/temperatura.gif) 
+
+## Fluxo prescrito
+![fluxo](https://github.com/HenriqueCCdA/VolumeFinito/blob/master/gifs/fluxo.gif) 
+
+
+## Fluxo convectivo ( Lei de resfriamento de Newton )
+![newton](https://github.com/HenriqueCCdA/VolumeFinito/blob/master/gifs/newton.gif) 
 
 
 # Referencia
