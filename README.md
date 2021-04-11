@@ -9,10 +9,12 @@ Solução do equação do calor utilizando o método dos volumes finitos para pr
 
 # Resultados
 
+A dimensão da domínio é 50 unidades. Todas as propriedades fisicas são consideradas como unitárias. O passo de tempo utilizado da integração temporal foi de 5.0 unidades de tempo. O domínio foi discretizado em 100 células.
+
 ## Temperatura prescrita
 
 * Condições de contorno
-<img src="https://render.githubusercontent.com/render/math?math=T(0 ,t) = 10">
+<img src="https://render.githubusercontent.com/render/math?math=T(0 ,t) = 10"> 
 <img src="https://render.githubusercontent.com/render/math?math=T(50,t) = 30">
 
 * Condição inicial
@@ -23,7 +25,7 @@ Solução do equação do calor utilizando o método dos volumes finitos para pr
 ## Fluxo prescrito
 
 * Condições de contorno
-<img src="https://render.githubusercontent.com/render/math?math=T(0 ,t) = 10">
+<img src="https://render.githubusercontent.com/render/math?math=T(0 ,t) = 10"> 
 <img src="https://render.githubusercontent.com/render/math?math=q_n(50,t) = -1.5">
 
 * Condição inicial
