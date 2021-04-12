@@ -9,7 +9,7 @@ Solução do equação do calor utilizando o método dos volumes finitos para pr
 
 # Equação resolvida
 
-A equação diferencial resolcida é:
+A equação diferencial resolvida é:
 
 <p align="center">
 <img src="https://render.githubusercontent.com/render/math?math=\frac{\partial( \rho c_pT )}{\partial t} = \frac{\partial }{\partial x} (k \frac{\partial T}{\partial x})"> 
@@ -20,8 +20,6 @@ onde
 <img src="https://render.githubusercontent.com/render/math?math=\rho"> é a massa específica
 <img src="https://render.githubusercontent.com/render/math?math=c_p"> é o calor específico a pressão constante
 <img src="https://render.githubusercontent.com/render/math?math=k"> é o coeficiente de difusçao de calor.
-
-
 
 # Resultados
 
@@ -37,8 +35,12 @@ A dimensão da domínio é 50 unidades. Todas as propriedades fisicas são consi
 <img src="https://render.githubusercontent.com/render/math?math=T(x,0) = 20">
 
 <p align="center">
-<img width="460" height="300" src="https://github.com/HenriqueCCdA/VolumeFinito/blob/master/gifs/temperatura.gif">
+  <img width="460" height="300" src="https://github.com/HenriqueCCdA/VolumeFinito/blob/master/gifs/temperatura.gif">
 </p>
+<p align="center">
+  <em>Fig1 - Caso com Temperatura prescrita.</em>
+</p>
+
 
 
 ## Fluxo prescrito
@@ -50,10 +52,11 @@ A dimensão da domínio é 50 unidades. Todas as propriedades fisicas são consi
 * Condição inicial
 <img src="https://render.githubusercontent.com/render/math?math=T(x,0) = 20">
 
-![fluxo](https://github.com/HenriqueCCdA/VolumeFinito/blob/master/gifs/fluxo.gif)
-
 <p align="center">
 <img width="460" height="300" src="https://github.com/HenriqueCCdA/VolumeFinito/blob/master/gifs/fluxo.gif">
+</p>
+<p align="center">
+  <em>Fig2 - Caso com fluxo prescrito.</em>
 </p>
 
 ## Fluxo convectivo ( Lei de resfriamento de Newton )
@@ -67,6 +70,9 @@ A dimensão da domínio é 50 unidades. Todas as propriedades fisicas são consi
 
 <p align="center">
 <img width="460" height="300" src="https://github.com/HenriqueCCdA/VolumeFinito/blob/master/gifs/newton.gif">
+</p>
+<p align="center">
+  <em>Fig3 - Caso com fluxo convectivo.</em>
 </p>
 
 # Referencia
