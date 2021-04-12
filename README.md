@@ -2,10 +2,26 @@
 
 Solução do equação do calor utilizando o método dos volumes finitos para problemas unidimensionais. Objetivo é a comparação de uma implementação simples de volume finitos em diversas linguagem diferentes.
 
-# liguagens de implementação
+# Liguagens de implementação
 * Fortran
 * Python (puro)
 * Python (numpy)
+
+# Equação resolvida
+
+A equação diferencial resolcida é:
+
+<p align="center">
+<img src="https://render.githubusercontent.com/render/math?math=\frac{\partial( \rho c_pT )}{\partial t} = \frac{\partial }{\partial x} (k \frac{\partial T}{\partial x})"> 
+</p>
+
+onde 
+<img src="https://render.githubusercontent.com/render/math?math=T"> é a temperatura 
+<img src="https://render.githubusercontent.com/render/math?math=\rho"> é a massa específica
+<img src="https://render.githubusercontent.com/render/math?math=c_p"> é o calor específico a pressão constante
+<img src="https://render.githubusercontent.com/render/math?math=k"> é o coeficiente de difusçao de calor.
+
+
 
 # Resultados
 
@@ -20,7 +36,10 @@ A dimensão da domínio é 50 unidades. Todas as propriedades fisicas são consi
 * Condição inicial
 <img src="https://render.githubusercontent.com/render/math?math=T(x,0) = 20">
 
-![Temperatura](https://github.com/HenriqueCCdA/VolumeFinito/blob/master/gifs/temperatura.gif) 
+<p align="center">
+<img width="460" height="300" src="https://github.com/HenriqueCCdA/VolumeFinito/blob/master/gifs/temperatura.gif">
+</p>
+
 
 ## Fluxo prescrito
 
@@ -31,8 +50,11 @@ A dimensão da domínio é 50 unidades. Todas as propriedades fisicas são consi
 * Condição inicial
 <img src="https://render.githubusercontent.com/render/math?math=T(x,0) = 20">
 
-![fluxo](https://github.com/HenriqueCCdA/VolumeFinito/blob/master/gifs/fluxo.gif) 
+![fluxo](https://github.com/HenriqueCCdA/VolumeFinito/blob/master/gifs/fluxo.gif)
 
+<p align="center">
+<img width="460" height="300" src="https://github.com/HenriqueCCdA/VolumeFinito/blob/master/gifs/fluxo.gif">
+</p>
 
 ## Fluxo convectivo ( Lei de resfriamento de Newton )
 
@@ -43,8 +65,9 @@ A dimensão da domínio é 50 unidades. Todas as propriedades fisicas são consi
 * Condição inicial
 <img src="https://render.githubusercontent.com/render/math?math=T(x,0) = 20">
 
-![newton](https://github.com/HenriqueCCdA/VolumeFinito/blob/master/gifs/newton.gif) 
-
+<p align="center">
+<img width="460" height="300" src="https://github.com/HenriqueCCdA/VolumeFinito/blob/master/gifs/newton.gif">
+</p>
 
 # Referencia
 
