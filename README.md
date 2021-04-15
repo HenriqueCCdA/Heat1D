@@ -75,6 +75,17 @@ A dimensão da domínio é 50 unidades. Todas as propriedades fisicas são consi
   <em>Fig3 - Caso com fluxo convectivo.</em>
 </p>
 
+# Comparação de tempos de excecução
+
+A Tabela 1 mostra que o codigo em Fortran e certa de 100 vezes mais rápido que a sua versão em python.
+
+*Tabela 1*
+|nDiv           | Fortran       |  Python  |
+|             - |              -|        - |
+|1.000          |0.054          | 7.1844   |
+|10.000         |0.543          | 57.0355  |
+|100.000        |4.970          |566.2701  |
+
 # Referencia
 
 <a href="http://ftp.demec.ufpr.br/disciplinas/TM702/Versteeg_Malalasekera_2ed.pdf"> Versteeg, H., Malalasekera, W. An Introduction to Computational Fluid Dynamics: The Finite Volume Method. 2 ed. , Pearson Education Limited, 2007</a>
