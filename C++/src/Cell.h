@@ -9,9 +9,18 @@ class Cell {
     int *nodes;
     double *u;  
     double *xc;
+    double dx;
     Prop prop;        
 
   public:
+
+    void set_dx(double d) {
+      this->dx = d;
+    }
+
+    double get_dx(void) {
+      return this->dx;
+    }
 
     Prop& getProp() {
       return this->prop;

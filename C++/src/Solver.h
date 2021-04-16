@@ -12,6 +12,22 @@ class TriSolver {
 
   public:
 
+    double* get_l(void) {
+      return  this->l;
+    }
+
+    double* get_d(void) {
+      return this->d;
+    }
+
+    double* get_u(void) {
+      return this->u;
+    }
+
+    double* get_b(void) {
+      return this->b;
+    }
+
     TriSolver(int n) {
       this->nEq = n;
       this->alloc();
@@ -55,6 +71,25 @@ class TriSolver {
       }
 
     }
+
+    void tdma() {
+      int nEq = this->get_nEq();
+      double *l = this->l,
+             *d = this->d,
+             *u = this->u,
+             *b = this->b,           
+             *um,
+             *bm; 
+
+      // ...
+      for (int i = 0; i < nEq; i++) {
+        um[i] = u[i];
+        bm[i] = b[i];
+      }
+      // ........................................................................
+
+    }
+
 
     ~TriSolver() {
       delete[] this->b;

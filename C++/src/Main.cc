@@ -2,12 +2,14 @@
 #include"Solver.h"
 #include"EpdSolver.h"
 #include"Files.h"
+#include"CellLoop.h"
 
 int main(int argc, char *argv[]) {
 
   Files files;
   Mesh mesh;
   Temporal temporal;
+  CellHeatLoop heatCell1D;
 
   // ... 
   files.set_nameIn("temperatura.dat");
@@ -24,7 +26,7 @@ int main(int argc, char *argv[]) {
   // ............................................................................
 
   // 
-  EpdSolver epd(&mesh, &temporal);
+  EpdSolver epd(&mesh, &temporal, &heatCell1D, &solver);
   // ............................................................................
   
   //
@@ -35,9 +37,24 @@ int main(int argc, char *argv[]) {
   mesh.nodalInterpol();
   // ............................................................................
 
-  //abrindo o aruivos de saida
+  // ... abrindo o arquivos de saida
   files.openOutputFile();
-  mesh.res_node(files.get_fileOutNode());
+  mesh.writeGeomNode(files.get_fileOutNode());
+  mesh.writeGeomCell(files.get_fileOutCell());
+  
+  // ............................................................................
+
+  // ...
+  mesh.resNode(files.get_fileOutNode(), temporal);
+  mesh.resCell(files.get_fileOutCell(), temporal);
+  // ............................................................................
+
+  // ...
+  epd.solver(files);
+  // ............................................................................ 
+
+
+  // ...
   files.closeOutputFile();
   // ............................................................................
 

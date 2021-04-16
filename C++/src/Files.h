@@ -34,6 +34,10 @@ class Files {
       return this->fileOutNode;
     }
 
+    ofstream& get_fileOutCell() {
+      return this->fileOutCell;
+    }
+
     string get_nameOut(void) {
       return this->nameOut;
     }
@@ -50,11 +54,19 @@ class Files {
         cout << name << " arquivo nao aberto !" << endl;
         exit(-1);
       }
+
+      name = this->nameOut + "_cell.c++";
+      fileOutCell.open(name, ios::out);
+      if (!fileOutNode.is_open()) {
+        cout << name << " arquivo nao aberto !" << endl;
+        exit(-1);
+      }
     }
 
     void closeOutputFile(void) {
       fileOutNode.close();
     }
+
 
     void read(Mesh &mesh, Temporal &temporal) {
       ifstream file;

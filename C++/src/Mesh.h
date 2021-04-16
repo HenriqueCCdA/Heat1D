@@ -4,6 +4,7 @@
 #include<iostream>
 #include<string>
 #include<algorithm>
+#include<iomanip>
 
 #include "Node.h"
 #include "Cell.h"
@@ -22,7 +23,16 @@ class Mesh{
     CcCi  ccci;    
     Temporal temporal;
     PropRef propRef;
+    
+    static void writeResLine(ofstream &file, int c1, double c2, double *cs, int nCs) {
+      file << setw(8) << c1 << " "
+           << fixed << setw(12) << setprecision(4) << c2;
 
+      for (int i = 0; i < nCs; i++) {
+        file << " " << setprecision(7) << scientific << cs[i];
+      }
+      file << endl;
+    }
   public:
 
     Mesh(){}
@@ -96,6 +106,8 @@ class Mesh{
 
       double *x = this->nodes.getPx();
       double dx = this->l/nCells;
+
+      this->getCells().set_dx(dx);
 
       // ...
       x[0] = 0.e0;
@@ -177,7 +189,32 @@ class Mesh{
       // ......................................................................
     }
 
-    void res_node(ofstream &file) {
-      file << "teste";
+    void resNode(ofstream &file, Temporal &temporal) {
+
+      writeResLine(file, temporal.get_iStep(), temporal.get_t(),
+                   this->getNodes().getPu(), this->get_nNodes());
+
     }
+
+    void writeGeomNode(ofstream &file) {
+
+      writeResLine(file, 0, 0.0, this->getNodes().getPx(), this->get_nNodes());
+
+    }
+
+    void resCell(ofstream &file, Temporal &temporal) {
+
+      writeResLine(file, temporal.get_iStep(), temporal.get_t(),
+        this->getCells().getPu(), this->get_nCells());
+
+    }
+
+    void writeGeomCell(ofstream &file) {
+
+      writeResLine(file, 0, 0.0, this->getCells().getPxc(), this->get_nCells());
+
+    }
+
+
+
 };
