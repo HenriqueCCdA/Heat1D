@@ -50,6 +50,7 @@ class EpdSolver {
 
     void solver(Files &files) {
       int nStep = temporal->get_nStep();
+      double *uCell = mesh->getCells().getPu();
 
       cout << "Running ..." << endl;
 
@@ -65,10 +66,18 @@ class EpdSolver {
                                 this->temporal);
         // ......................................................................
 
+        //... solver
+        uCell = solverEq->tdma(uCell);
+        //........................................................................
+
+        // ... 
+        mesh->nodalInterpol();
+        //........................................................................
+
         // ...
         mesh->resNode(files.get_fileOutNode(), *temporal);
         mesh->resCell(files.get_fileOutCell(), *temporal);
-        // .......................................................................
+        // .......................................................................   
 
       }
       // .........................................................................

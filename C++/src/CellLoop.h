@@ -38,8 +38,7 @@ public:
            *aL = solver->get_l(),
            *b  = solver->get_b();
     // ...
-    int nCells = mesh->get_nCells(),
-        n;
+    int nCells = mesh->get_nCells(), n;
     // ..........................................................................
 
     // ... temperatura prescrita
@@ -94,7 +93,7 @@ public:
     }
 
     // ... loop nas celulas do interios
-    for(int i = 1; i < nCells - 2; i++){
+    for(int i = 1; i < nCells - 1; i++){
       aP0 = rho[i]*cp[i]*dx / dt;
       // ... w
       kf = (k[i - 1] + k[i])*0.5e0;

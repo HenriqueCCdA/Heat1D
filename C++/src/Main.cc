@@ -40,8 +40,7 @@ int main(int argc, char *argv[]) {
   // ... abrindo o arquivos de saida
   files.openOutputFile();
   mesh.writeGeomNode(files.get_fileOutNode());
-  mesh.writeGeomCell(files.get_fileOutCell());
-  
+  mesh.writeGeomCell(files.get_fileOutCell()); 
   // ............................................................................
 
   // ...
@@ -52,7 +51,6 @@ int main(int argc, char *argv[]) {
   // ...
   epd.solver(files);
   // ............................................................................ 
-
 
   // ...
   files.closeOutputFile();

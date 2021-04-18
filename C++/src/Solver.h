@@ -7,8 +7,8 @@ class TriSolver {
   private:
     int nEq;
     double *b;
-    double *x;
     double *l,*d,*u;
+    double *um,*bm;
 
   public:
 
@@ -45,41 +45,46 @@ class TriSolver {
       
       int n = this->nEq;      
 
-      if ((this->b = new double(n)) == nullptr) {
+      if ((this->b = new double[n]) == nullptr) {
         cout << "Erro na alocacao do vetor b" << endl;
         exit(-1);
       }
-
-      if ((this->x = new double(n)) == nullptr) {
-        cout << "Erro na alocacao do vetor x" << endl;
-        exit(-1);
-      }
-      
-      if ((this->l = new double(n)) == nullptr) {
+     
+      if ((this->l = new double[n]) == nullptr) {
         cout << "Erro na alocacao do vetor l" << endl;
         exit(-1);
       }
 
-      if ((this->d = new double(n)) == nullptr) {
+      if ((this->d = new double[n]) == nullptr) {
         cout << "Erro na alocacao do vetor d" << endl;
         exit(-1);
       }
 
-      if ((this->u = new double(n)) == nullptr) {
+      if ((this->u = new double[n]) == nullptr) {
         cout << "Erro na alocacao do vetor d" << endl;
+        exit(-1);
+      }
+
+      if ((this->um = new double[n]) == nullptr) {
+        cout << "Erro na alocacao do vetor um" << endl;
+        exit(-1);
+      }
+
+      if ((this->bm = new double[n]) == nullptr) {
+        cout << "Erro na alocacao do vetor bm" << endl;
         exit(-1);
       }
 
     }
 
-    void tdma() {
+    double* tdma(double *x) {
       int nEq = this->get_nEq();
       double *l = this->l,
              *d = this->d,
              *u = this->u,
              *b = this->b,           
-             *um,
-             *bm; 
+             *um= this->um,
+             *bm= this->bm; 
 
       // ...
       for (int i = 0; i < nEq; i++) {
@@ -88,14 +93,36 @@ class TriSolver {
       }
       // ........................................................................
 
+      // ...
+      um[0] /= d[0];
+      bm[0] /= d[0];
+      for (int i = 1; i < nEq - 1; i++) {
+        um[i] = um[i] / (d[i] - um[i - 1]*l[i]);
+        bm[i] = (bm[i] - bm[i - 1]*l[i]) / (d[i] - um[i - 1]*l[i]);
+      }
+      int nLast = nEq - 1;
+      bm[nLast] = (bm[nLast] - bm[nLast - 1]*l[nLast]) 
+                / (d[nLast] - um[nLast - 1]*l[nLast]);
+      // ........................................................................
+
+      // ...
+      x[nLast] = bm[nLast];
+      for (int i = nLast - 1; i > -1; i--) {
+        x[i] = bm[i] - um[i] * x[i + 1];
+      }
+      // ........................................................................
+
+      return x;
+
     }
 
 
     ~TriSolver() {
       delete[] this->b;
-      delete[] this->x;
       delete[] this->l;
       delete[] this->d;
       delete[] this->u;
+      delete[] this->um;
+      delete[] this->bm;
     }
 };
