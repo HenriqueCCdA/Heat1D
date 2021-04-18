@@ -11,9 +11,31 @@
  * -------------------------------------------------------------------*
  * Parametros de Saida:                                               *
  * -------------------------------------------------------------------*
- * u, d, l -> matriz tridiagonal atualizada                           *
- * b -> vetor de forcas atualizado                                    *
- * -------------------------------------------------------------------*
+ * ------------------------------------------------------------------ *
+ * Objetos utilizados:                                                *
+ *------------------------------------------------------------------  *
+ * TriSolver:                                                         *
+ *  |_ l[neq] - diagonal inferior  (alterado)                         *
+ *  |_ d[neq] - diagonal principal (alterado)                         *
+ *  |_ u[neq] - diagonal superio   (alterado)                         *
+ *  |_ b[neq] - vetor independente (alterado)                         *
+ * Mesh:                                                              *
+ * |_ cells:                                                          *
+ *    |_ u - valores da solucao por celula                            *
+ * |  |_ prop:                                                        *
+ * |     |_ rho - massa especifica                                    *
+ * |     |_ cp  - calor especifico                                    *
+ * |     |_ k   - coeficiente de difusao                              *
+ * |_ cccci:                                                          *
+ *       |_ cceType  - tipo de condicao de contorno esquerda          *
+ *       |_ cceValue - valor de condicao de contorno esquerda         *
+ *       |_ ccdType  - tipo de condicao de contorno direita           *
+ *       |_ ccdValue - valor de condicao de contorno esquerda         *
+ * temporal                                                           *
+ * |_ dt - delta t                                                    *
+ * ------------------------------------------------------------------ *
+ * OBS:                                                               *
+ * ------------------------------------------------------------------ *
  *********************************************************************/
 void CellHeatLoop::montaSistema(TriSolver *solver, Mesh *mesh, 
                                 Temporal *temporal) {

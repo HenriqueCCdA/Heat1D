@@ -14,37 +14,31 @@ class Cell {
 
   public:
 
-    void set_dx(double d) {
-      this->dx = d;
-    }
+    // ... setters
+    void set_dx(double d) { this->dx = d; }
 
-    double get_dx(void) {
-      return this->dx;
-    }
+    void set_nCells(int d) { this->nCells = d; }
 
-    Prop& getProp() {
-      return this->prop;
+    void set_u(double d, int n) {
+      for (int i = 0; i < n; i++) {
+        this->u[i] = d;
+      }
     }
+    // ..........................................................................
 
-    void set_nCells(int d) {
-      this->nCells = d;
-    }
+    // ... getters
+    double get_dx(void) { return this->dx; }
 
-    int get_nCells(void) {
-      return this->nCells;
-    }
+    Prop& getProp() { return this->prop; }
 
-    double* getPxc() {
-      return this->xc;
-    }
+    int get_nCells(void) { return this->nCells; }
 
-    double* getPu() {
-      return this->u;
-    }
+    double* getPxc() { return this->xc; }
 
-    int* getPnodes() {
-      return this->nodes;
-    }
+    double* getPu() { return this->u; }
+
+    int* getPnodes() { return this->nodes; }
+    // ..........................................................................
 
     void alloc(int n) {
       
@@ -68,17 +62,9 @@ class Cell {
 
     }
 
-    void set_u(double d, int n) {
-      for (int i = 0; i < n; i++) {
-        this->u[i] = d;
-      }
-    }
-
     ~Cell() {
       delete[] this->xc;
       delete[] this->u;
       delete[] this->nodes;
     }
-
-
 };

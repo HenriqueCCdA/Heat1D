@@ -9,6 +9,7 @@ class PropRef {
 
   public:
 
+    // ... setters
     void set_rho(double value) {
       this->rho = value;
     }
@@ -21,6 +22,7 @@ class PropRef {
       this->k = value;;
     }
 
+    // ... getters
     double get_rho(void) {
       return this->rho;
     }
@@ -44,6 +46,7 @@ private:
 
 public:
 
+  // ... getters
   double* get_rho(void) {
     return this->rho;
   }
@@ -77,7 +80,8 @@ public:
       this->k[i]   = propRef.get_k();
     }
   }
-
+  
+  // ... Destrutor
   ~Prop() {
     delete[] this->rho;
     delete[] this->cp;
