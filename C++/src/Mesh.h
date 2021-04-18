@@ -64,10 +64,6 @@ class Mesh{
 
     void grid(void);
 
-    void plot_coords(void); 
-
-    void plot_cells(void); 
-
     void nodalInterpol(void);
 
     void resNode(ofstream &file, Temporal &temporal); 
