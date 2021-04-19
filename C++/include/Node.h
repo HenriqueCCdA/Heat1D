@@ -1,5 +1,7 @@
 #pragma once
 
+#include"../include/GerenciadoDeMemoria.h"
+
 #include<iostream>
 using namespace std;
 
@@ -31,23 +33,17 @@ class Node{
     
     // ... metodos
     void alloc(int n) {
-      if ((this->x = new double[n]) == nullptr) {
-        cout<< "Erro na alocacao do vetor x" << endl;
-        exit(-1);
-      }
-
-      if ((this->u = new double[n]) == nullptr) {
-        cout << "Erro na alocacao do vetor x" << endl;
-        exit(-1);
-      }
-
+      this->x = mem.alloc<double>(n);
+      this->u = mem.alloc<double>(n);
     }
     // ..........................................................................
 
 
+    // ...
     ~Node() {
-      delete[] this->x;
-      delete[] this->u;
+      mem.dealloc<double>(&this->x);
+      mem.dealloc<double>(&this->u);
     }
+    // ..........................................................................
 
 };

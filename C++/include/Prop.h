@@ -1,5 +1,7 @@
 #pragma once
 
+#include"../include/GerenciadoDeMemoria.h"
+
 class PropRef {
 
   private:
@@ -45,17 +47,9 @@ public:
 
   // ... metodos
   void alloc(int n) {
-    if ((this->rho = new double[n]) == nullptr) {
-      cout << "Erro na alocacao do vetor rho" << endl;
-    }
-
-    if ((this->cp = new double[n]) == nullptr) {
-      cout << "Erro na alocacao do vetor cp" << endl;
-    }
-
-    if ((this->k = new double[n]) == nullptr) {
-      cout << "Erro na alocacao do vetor k" << endl;
-    }
+    this->rho = mem.alloc<double>(n);
+    this->cp = mem.alloc<double>(n);
+    this->k = mem.alloc<double>(n);    
   }
 
   void init_prop(PropRef &propRef, int n) {
@@ -69,10 +63,10 @@ public:
 
   // ... Destrutor
   ~Prop() {
-    delete[] this->rho;
-    delete[] this->cp;
-    delete[] this->k;
+    mem.dealloc<double>(&this->rho);
+    mem.dealloc<double>(&this->cp);
+    mem.dealloc<double>(&this->k);
   }
-
+  // ..........................................................................
 };
 

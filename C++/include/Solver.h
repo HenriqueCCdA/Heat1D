@@ -1,5 +1,7 @@
 #pragma once
 
+#include"../include/GerenciadoDeMemoria.h"
+
 #include<iostream>
 using namespace std;
 
@@ -41,11 +43,11 @@ class TriSolver {
     
     // ... detrutor
     ~TriSolver() {
-      delete[] this->b;
-      delete[] this->l;
-      delete[] this->d;
-      delete[] this->u;
-      delete[] this->um;
-      delete[] this->bm;
+      mem.dealloc<double>(&this->b);
+      mem.dealloc<double>(&this->l);
+      mem.dealloc<double>(&this->d);
+      mem.dealloc<double>(&this->u);
+      mem.dealloc<double>(&this->um);
+      mem.dealloc<double>(&this->bm);     
     }
 };

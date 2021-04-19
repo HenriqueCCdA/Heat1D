@@ -1,6 +1,7 @@
 #pragma once
 
 #include"../include/Prop.h"
+#include"../include/GerenciadoDeMemoria.h"
 
 class Cell {
 
@@ -43,21 +44,9 @@ class Cell {
     // ... metodos
     void alloc(int n) {
       
-      if ((this->xc = new double[n]) == nullptr) {
-        cout << "Erro na alocacao do vetor xc" << endl;
-        exit(-1);
-      }
-
-      if ((this->u = new double[n]) == nullptr) {
-        cout << "Erro na alocacao do vetor u" << endl;
-        exit(-1);
-      }
-
-      if ((this->nodes = new int[2*n]) == nullptr) {
-        cout << "Erro na alocacao do vetor nodes" << endl;
-        exit(-1);
-      }
-
+      this->xc = mem.alloc<double>(n);
+      this->u = mem.alloc<double>(n);
+      this->nodes = mem.alloc<int>(2*n);
 
       this->prop.alloc(n);
 
@@ -65,8 +54,9 @@ class Cell {
     // ..........................................................................
 
     ~Cell() {
-      delete[] this->xc;
-      delete[] this->u;
-      delete[] this->nodes;
+      mem.dealloc<double>(&this->xc);
+      mem.dealloc<double>(&this->u);
+      mem.dealloc<int>(&this->nodes);
+
     }
 };

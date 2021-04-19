@@ -31,35 +31,13 @@ void TriSolver::alloc(void) {
 
   int n = this->nEq;
 
-  if ((this->b = new double[n]) == nullptr) {
-    cout << "Erro na alocacao do vetor b" << endl;
-    exit(-1);
-  }
+  this->b = mem.alloc<double>(n);
+  this->l = mem.alloc<double>(n);
+  this->d = mem.alloc<double>(n);
+  this->u = mem.alloc<double>(n);
 
-  if ((this->l = new double[n]) == nullptr) {
-    cout << "Erro na alocacao do vetor l" << endl;
-    exit(-1);
-  }
-
-  if ((this->d = new double[n]) == nullptr) {
-    cout << "Erro na alocacao do vetor d" << endl;
-    exit(-1);
-  }
-
-  if ((this->u = new double[n]) == nullptr) {
-    cout << "Erro na alocacao do vetor d" << endl;
-    exit(-1);
-  }
-
-  if ((this->um = new double[n]) == nullptr) {
-    cout << "Erro na alocacao do vetor um" << endl;
-    exit(-1);
-  }
-
-  if ((this->bm = new double[n]) == nullptr) {
-    cout << "Erro na alocacao do vetor bm" << endl;
-    exit(-1);
-  }
+  this->bm = mem.alloc<double>(n);
+  this->um = mem.alloc<double>(n);
 
 }
 //*******************************************************************************
