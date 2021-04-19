@@ -1,5 +1,5 @@
-#include"EpdSolver.h"
-#include"RunTimes.h"
+#include"../include/EpdSolver.h"
+#include"../include/RunTimes.h"
 
 /**********************************************************************
  * Data de Ciacao:       18/04/2021                                   *

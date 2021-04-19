@@ -1,9 +1,9 @@
-#include"Mesh.h"
-#include"Solver.h"
-#include"EpdSolver.h"
-#include"Files.h"
-#include"CellLoop.h"
-#include"RunTimes.h"
+#include"../include/Mesh.h"
+#include"../include/Solver.h"
+#include"../include/EpdSolver.h"
+#include"../include/Files.h"
+#include"../include/CellLoop.h"
+#include"../include/RunTimes.h"
 
 RunTimes times;
 

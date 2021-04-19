@@ -1,6 +1,6 @@
 #pragma once
 
-#include"Prop.h"
+#include"../include/Prop.h"
 
 class Cell {
 

@@ -1,5 +1,5 @@
 #pragma once
-#include"HccaTimeCc.h"
+#include"../include/HccaTimeCc.h"
 
 class RunTimes: TimeCc {
 
