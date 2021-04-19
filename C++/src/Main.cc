@@ -3,6 +3,9 @@
 #include"EpdSolver.h"
 #include"Files.h"
 #include"CellLoop.h"
+#include"RunTimes.h"
+
+RunTimes times;
 
 int main(int argc, char *argv[]) {
 
@@ -33,27 +36,25 @@ int main(int argc, char *argv[]) {
   epd.init();
   // ............................................................................
   
-  //
-  mesh.nodalInterpol();
-  // ............................................................................
-
   // ... abrindo o arquivos de saida
   files.openOutputFile();
-  mesh.writeGeomNode(files.get_fileOutNode());
-  mesh.writeGeomCell(files.get_fileOutCell()); 
   // ............................................................................
-
-  // ...
-  mesh.resNode(files.get_fileOutNode(), temporal);
-  mesh.resCell(files.get_fileOutCell(), temporal);
-  // ............................................................................
-
+ 
   // ...
   epd.solver(files);
   // ............................................................................ 
 
   // ...
   files.closeOutputFile();
+  // ............................................................................
+
+  // ...  
+  cout << "Time Sist(s)   : " 
+       << fixed << setprecision(4) << times.getSist() << endl
+       << "Time Solver(s) : " 
+       << fixed << setprecision(4) << times.getSolver() << endl
+       << "Time Wres(s)   : " 
+       << fixed << setprecision(4) << times.getRes() << endl;
   // ............................................................................
 
   return 0;

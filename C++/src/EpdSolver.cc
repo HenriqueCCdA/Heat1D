@@ -1,4 +1,5 @@
 #include"EpdSolver.h"
+#include"RunTimes.h"
 
 /**********************************************************************
  * Data de Ciacao:       18/04/2021                                   *
@@ -27,22 +28,44 @@ void EpdSolver::solver(Files &files){
   int nStep = temporal->get_nStep();
   double *uCell = mesh->getCells().getPu();
 
+  // ...
+  times.init_timer();
+  mesh->writeGeomNode(files.get_fileOutNode());
+  mesh->writeGeomCell(files.get_fileOutCell());
+  times.updateResTimer();
+  // ............................................................................
+
+  //
+  mesh->nodalInterpol();
+  // ............................................................................
+
+  // ...
+  times.init_timer();
+  mesh->resNode(files.get_fileOutNode(), *temporal);
+  mesh->resCell(files.get_fileOutCell(), *temporal);
+  times.updateResTimer();
+  // ............................................................................
+
   cout << "Running ..." << endl;
 
-  for (int j = 1; j < nStep; j++) {
+  for (int j = 0; j < nStep; j++) {
 
     // ...
     temporal->updateTime();
     // ..........................................................................
 
     // ...
+    times.init_timer();
     cellLoop->montaSistema(this->solverEq,
                            this->mesh,
                            this->temporal);
+    times.updateSistTimer();
     // ..........................................................................
 
     //... solver
+    times.init_timer();
     uCell = solverEq->tdma(uCell);
+    times.updateSolverTimer();
     //...........................................................................
 
     // ... 
@@ -50,8 +73,10 @@ void EpdSolver::solver(Files &files){
     //...........................................................................
 
     // ...
+    times.init_timer();
     mesh->resNode(files.get_fileOutNode(), *temporal);
     mesh->resCell(files.get_fileOutCell(), *temporal);
+    times.updateResTimer();
     // ..........................................................................   
 
   }
