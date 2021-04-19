@@ -40,6 +40,7 @@ class Cell {
     int* getPnodes() { return this->nodes; }
     // ..........................................................................
 
+    // ... metodos
     void alloc(int n) {
       
       if ((this->xc = new double[n]) == nullptr) {
@@ -61,6 +62,7 @@ class Cell {
       this->prop.alloc(n);
 
     }
+    // ..........................................................................
 
     ~Cell() {
       delete[] this->xc;
