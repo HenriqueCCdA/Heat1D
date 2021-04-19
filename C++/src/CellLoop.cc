@@ -37,30 +37,29 @@
  * OBS:                                                               *
  * ------------------------------------------------------------------ *
  *********************************************************************/
-void CellHeatLoop::montaSistema(TriSolver *solver, Mesh *mesh, 
-                                Temporal *temporal) {
+void CellHeatLoop::montaSistema(void){
   // ...
   double aP0, sU, sP, kf, aE, aW;
   // ..
-  double *rho = mesh->getCells().getProp().get_rho();
-  double *cp = mesh->getCells().getProp().get_cp();
-  double *k = mesh->getCells().getProp().get_k();
+  double *rho = this->mesh->getCells().getProp().get_rho();
+  double *cp = this->mesh->getCells().getProp().get_cp();
+  double *k = this->mesh->getCells().getProp().get_k();
   // ...
-  double dt = temporal->get_dt();
-  double dx = mesh->getCells().get_dx();
+  double dt = this->temporal->get_dt();
+  double dx = this->mesh->getCells().get_dx();
   // ...
-  int cceType = mesh->getCcci().get_cceType(),
-    ccdType = mesh->getCcci().get_ccdType();
-  double cceValue = mesh->getCcci().get_cceValue(),
-    ccdValue = mesh->getCcci().get_ccdValue();
-  double *u = mesh->getCells().getPu();
+  int cceType = this->mesh->getCcci().get_cceType(),
+    ccdType = this->mesh->getCcci().get_ccdType();
+  double cceValue = this->mesh->getCcci().get_cceValue(),
+    ccdValue = this->mesh->getCcci().get_ccdValue();
+  double *u = this->mesh->getCells().getPu();
   // ... sistema de equacoes
-  double *aU = solver->get_u(),
-    *aD = solver->get_d(),
-    *aL = solver->get_l(),
-    *b = solver->get_b();
+  double *aU = this->solver->get_u(),
+    *aD = this->solver->get_d(),
+    *aL = this->solver->get_l(),
+    *b = this->solver->get_b();
   // ...
-  int nCells = mesh->get_nCells(), n;
+  int nCells = this->mesh->get_nCells(), n;
   // ..........................................................................
 
   // ... temperatura prescrita

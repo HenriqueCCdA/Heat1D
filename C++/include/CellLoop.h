@@ -8,14 +8,25 @@ class CellLoop {
 
   public:
 
-    virtual void montaSistema()=0;
+    virtual void montaSistema(void)=0;
 
 };
 
-class CellHeatLoop{
+class CellHeatLoop: public CellLoop{
 
-public:
+  private:
+    TriSolver *solver;
+    Mesh *mesh;
+    Temporal *temporal; 
 
-  void montaSistema(TriSolver *solver, Mesh *mesh, Temporal *temporal);
+  public:
+
+    CellHeatLoop(TriSolver *solver, Mesh *mesh, Temporal *temporal) {
+      this->solver = solver;
+      this->mesh = mesh;
+      this->temporal = temporal;
+    }
+
+    void montaSistema(void);
 
 };

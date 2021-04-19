@@ -56,9 +56,7 @@ void EpdSolver::solver(Files &files){
 
     // ...
     times.init_timer();
-    cellLoop->montaSistema(this->solverEq,
-                           this->mesh,
-                           this->temporal);
+    cellLoop->montaSistema();
     times.updateSistTimer();
     // ..........................................................................
 

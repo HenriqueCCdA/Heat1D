@@ -50,4 +50,5 @@ class TriSolver {
       mem.dealloc<double>(&this->um);
       mem.dealloc<double>(&this->bm);     
     }
+    // ..........................................................................
 };

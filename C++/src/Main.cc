@@ -5,6 +5,7 @@
 #include"../include/CellLoop.h"
 #include"../include/RunTimes.h"
 #include"../include/GerenciadoDeMemoria.h"
+#include "Main.h"
 
 
 RunTimes times;
@@ -16,7 +17,6 @@ int main(int argc, char *argv[]) {
   Files files;
   Mesh mesh;
   Temporal temporal;
-  CellHeatLoop heatCell1D;
 
   // ... 
   files.set_nameIn("temperatura.dat");
@@ -32,8 +32,12 @@ int main(int argc, char *argv[]) {
   mesh.grid();
   // ............................................................................
 
+  // ...
+  CellLoop *heatCell1D = new CellHeatLoop(&solver, &mesh, &temporal);
+  // ............................................................................
+
   // 
-  EpdSolver epd(&mesh, &temporal, &heatCell1D, &solver);
+  EpdSolver epd(&mesh, &temporal, heatCell1D, &solver);
   // ............................................................................
   
   //
