@@ -2,7 +2,7 @@
 
 /**********************************************************************
  * Data de Ciacao:       18/04/2021                                   *
- * Data de Modificacao : 00/00/0000                                   *
+ * Data de Modificacao : 20/04/2021                                   *
  * -------------------------------------------------------------------*
  * montaSistema: loop nas celulas para montar os sistema de equacoes  *
  * -------------------------------------------------------------------*
@@ -54,10 +54,10 @@ void CellHeatLoop::montaSistema(void){
     ccdValue = this->mesh->getCcci().get_ccdValue();
   double *u = this->mesh->getCells().getPu();
   // ... sistema de equacoes
-  double *aU = this->solver->get_u(),
-    *aD = this->solver->get_d(),
-    *aL = this->solver->get_l(),
-    *b = this->solver->get_b();
+  double *aU = this->solver->get_dataStruct()->get_a3(),
+         *aD = this->solver->get_dataStruct()->get_a2(),
+         *aL = this->solver->get_dataStruct()->get_a1(),
+          *b = this->solver->get_dataStruct()->get_b();
   // ...
   int nCells = this->mesh->get_nCells(), n;
   // ..........................................................................

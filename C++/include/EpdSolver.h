@@ -16,12 +16,12 @@ class EpdSolver {
     Mesh *mesh; 
     Temporal *temporal;
     CellLoop *cellLoop;
-    TriSolver *solverEq;
+    Solver *solverEq;
   
   public:
 
     EpdSolver(Mesh *mesh, Temporal *temporal,
-              CellLoop *cellLoop, TriSolver *solver) {
+              CellLoop *cellLoop, Solver *solver) {
       this->mesh = mesh;
       this->temporal = temporal;      
       this->cellLoop = cellLoop;

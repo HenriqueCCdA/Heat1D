@@ -2,7 +2,7 @@
 
 /******************************************************************************
  * Data de Ciacao:       18/04/2021                                           *
- * Data de Modificacao : 00/00/0000                                           *
+ * Data de Modificacao : 20/04/2021                                           *
  * -------------------------------------------------------------------------- *
  * alloc: allocacoa da memoria utilizada no solver Tridiagonal                *
  * -------------------------------------------------------------------------- *
@@ -29,18 +29,53 @@
  ******************************************************************************/
 void TriSolver::alloc(void) {
 
-  int n = this->nEq;
-
-  this->b = mem.alloc<double>(n);
-  this->l = mem.alloc<double>(n);
-  this->d = mem.alloc<double>(n);
-  this->u = mem.alloc<double>(n);
+  int n = this->get_nEq();
 
   this->bm = mem.alloc<double>(n);
   this->um = mem.alloc<double>(n);
 
 }
 //*******************************************************************************
+
+/******************************************************************************
+ * Data de Ciacao:       18/04/2021                                           *
+ * Data de Modificacao : 00/00/0000                                           *
+ * -------------------------------------------------------------------------- *
+ * alloc: allocacoa da memoria utilizada no solver Tridiagonal                *
+ * -------------------------------------------------------------------------- *
+ * Parametros de entrada:                                                     *
+ * -------------------------------------------------------------------------- *
+ * x(neq)   - vetor independente                                              *
+ * -------------------------------------------------------------------------- *
+ * Parametros de saida:                                                       *
+ * -------------------------------------------------------------------------- *
+ * x(neq) - vetor solucao                                                     *
+ * -------------------------------------------------------------------------- *
+ * Objetos utilizados:                                                        *
+ *--------------------------------------------------------------------------- *
+ * TriSolver:                                                                 *
+ * l[neq]   - diagonal inferior  (alocado)                                    *
+ * d[neq]   - diagonal principal (alocado)                                    *
+ * u[neq]   - diagonal superio   (alocado)                                    *
+ * b[neq]   - vetor independente (alocado)                                    *
+ *um[neq]   - vetor auxiliar     (alocado)                                    *
+ *bm[neq]   - vetor auxiliar     (alocado)                                    *
+ * -------------------------------------------------------------------------- *
+ * OBS:                                                                       *
+ * -------------------------------------------------------------------------- *
+ ******************************************************************************/
+void TriaDiagonal::alloc(void) {
+
+  int n = this->get_n();
+
+  this->b = mem.alloc<double>(n);
+  this->l = mem.alloc<double>(n);
+  this->d = mem.alloc<double>(n);
+  this->u = mem.alloc<double>(n);
+
+}
+//*******************************************************************************
+
 
 /*********************************************************************************
  * Data de criacao    : 18/04/2021                                               *
@@ -82,10 +117,11 @@ void TriSolver::alloc(void) {
  ********************************************************************************/
 double* TriSolver::tdma(double *x) {
   int nEq = this->get_nEq();
-  double *l = this->l,
-    *d = this->d,
-    *u = this->u,
-    *b = this->b,
+
+  double *l = this->get_dataStruct()->get_a1(),
+    *d = this->get_dataStruct()->get_a2(),
+    *u = this->get_dataStruct()->get_a3(),
+    *b = this->get_dataStruct()->get_b(),
     *um = this->um,
     *bm = this->bm;
 

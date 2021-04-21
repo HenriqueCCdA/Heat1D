@@ -15,13 +15,13 @@ class CellLoop {
 class CellHeatLoop: public CellLoop{
 
   private:
-    TriSolver *solver;
+    Solver *solver;
     Mesh *mesh;
     Temporal *temporal; 
 
   public:
 
-    CellHeatLoop(TriSolver *solver, Mesh *mesh, Temporal *temporal) {
+    CellHeatLoop(Solver *solver, Mesh *mesh, Temporal *temporal) {
       this->solver = solver;
       this->mesh = mesh;
       this->temporal = temporal;

@@ -9,9 +9,14 @@ class Memoria {
     template<typename T> T* alloc(size_t n) {
        T *p = nullptr;       
        
+       if (!n) {
+         std::cout << "Mem: Numero nulo de posicoes !!"<< std::endl;
+         exit(-1);
+       }
+
        p = new (std::nothrow) T[n];
        if (!p) {
-          std::cout << "Arranjo nao pode ser alocado" << std::endl;
+          std::cout << "Mem: Arranjo nao pode ser alocado" << std::endl;
           exit(-1);
        }
        return p;       

@@ -5,8 +5,6 @@
 #include"../include/CellLoop.h"
 #include"../include/RunTimes.h"
 #include"../include/GerenciadoDeMemoria.h"
-#include "Main.h"
-
 
 RunTimes times;
 Memoria mem;
@@ -25,7 +23,8 @@ int main(int argc, char *argv[]) {
   // ............................................................................
 
   // ... 
-  TriSolver solver(mesh.get_nCells());
+  DataStruct *data = new TriaDiagonal(mesh.get_nCells());
+  Solver *solver = new TriSolver(data);
   // ............................................................................
 
   // ... 
@@ -33,11 +32,11 @@ int main(int argc, char *argv[]) {
   // ............................................................................
 
   // ...
-  CellLoop *heatCell1D = new CellHeatLoop(&solver, &mesh, &temporal);
+  CellLoop *heatCell1D = new CellHeatLoop(solver, &mesh, &temporal);
   // ............................................................................
 
   // 
-  EpdSolver epd(&mesh, &temporal, heatCell1D, &solver);
+  EpdSolver epd(&mesh, &temporal, heatCell1D, solver);
   // ............................................................................
   
   //

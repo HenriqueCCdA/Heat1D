@@ -62,7 +62,7 @@ void EpdSolver::solver(Files &files){
 
     //... solver
     times.init_timer();
-    uCell = solverEq->tdma(uCell);
+    uCell = solverEq->solver(uCell);
     times.updateSolverTimer();
     //...........................................................................
 
