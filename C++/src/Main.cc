@@ -1,5 +1,5 @@
 #include"../include/Mesh.h"
-#include"../include/Solver.h"
+#include"../include/TriaSolver.h"
 #include"../include/EpdSolver.h"
 #include"../include/Files.h"
 #include"../include/CellLoop.h"
