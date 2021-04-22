@@ -14,13 +14,13 @@ class EpdSolver {
 
   private:
     Mesh *mesh; 
-    Temporal *temporal;
+    IntTemp *temporal;
     CellLoop *cellLoop;
     Solver *solverEq;
   
   public:
 
-    EpdSolver(Mesh *mesh, Temporal *temporal,
+    EpdSolver(Mesh *mesh, IntTemp *temporal,
               CellLoop *cellLoop, Solver *solver) {
       this->mesh = mesh;
       this->temporal = temporal;      

@@ -21,7 +21,7 @@ class Mesh{
     Node nodes;
     Cell cells;  
     CcCi  ccci;    
-    Temporal temporal;
+    IntTemp temporal;
     PropRef propRef;
     
     static void writeResLine(ofstream &file, int c1, double c2, double *cs, int nCs) {
@@ -66,11 +66,11 @@ class Mesh{
 
     void nodalInterpol(void);
 
-    void resNode(ofstream &file, Temporal &temporal); 
+    void resNode(ofstream &file, IntTemp &temporal); 
     
     void writeGeomNode(ofstream &file); 
 
-    void resCell(ofstream &file, Temporal &temporal);
+    void resCell(ofstream &file, IntTemp &temporal);
 
     void writeGeomCell(ofstream &file); 
     // ..........................................................................

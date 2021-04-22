@@ -45,6 +45,6 @@ class Files {
       fileOutNode.close();
     }
 
-    void read(Mesh &mesh, Temporal &temporal);
+    void read(Mesh &mesh, IntTemp &temporal);
     // .......................................................................... 
 };

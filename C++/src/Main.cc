@@ -14,7 +14,7 @@ int main(int argc, char *argv[]) {
 
   Files files;
   Mesh mesh;
-  Temporal temporal;
+  IntTemp temporal;
 
   // ... 
   files.set_nameIn("temperatura.dat");

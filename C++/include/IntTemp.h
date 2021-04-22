@@ -1,6 +1,6 @@
 #pragma once
 
-class Temporal {
+class IntTemp {
 
   private:    
     int nStep, iStep;

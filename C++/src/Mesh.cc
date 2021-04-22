@@ -203,7 +203,7 @@ void Mesh::nodalInterpol(void) {
  * OBS:                                                               *
  * ------------------------------------------------------------------ *
  *********************************************************************/
-void Mesh::resNode(ofstream &file, Temporal &temporal) {
+void Mesh::resNode(ofstream &file, IntTemp &temporal) {
 
   writeResLine(file, temporal.get_iStep(), temporal.get_t(),
     this->getNodes().getPu(), this->get_nNodes());
@@ -236,7 +236,7 @@ void Mesh::writeGeomNode(ofstream &file) {
  * OBS:                                                               *
  * ------------------------------------------------------------------ *
  *********************************************************************/
-void Mesh::resCell(ofstream &file, Temporal &temporal) {
+void Mesh::resCell(ofstream &file, IntTemp &temporal) {
 
   writeResLine(file, temporal.get_iStep(), temporal.get_t(),
     this->getCells().getPu(), this->get_nCells());

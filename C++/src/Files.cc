@@ -62,7 +62,7 @@ void Files::openOutputFile(void) {
  * OBS:                                                                         *
  * ---------------------------------------------------------------------------- *
  ********************************************************************************/
-void Files::read(Mesh &mesh, Temporal &temporal) {
+void Files::read(Mesh &mesh, IntTemp &temporal) {
   ifstream file;
   string name = this->get_nameIn();
 
