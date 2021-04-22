@@ -2,7 +2,7 @@
 
 #include"Mesh.h"
 #include"Solver.h"
-#include"Temporal.h"
+#include"IntTemp.h"
 
 class CellLoop {
 
@@ -17,14 +17,14 @@ class CellHeatLoop: public CellLoop{
   private:
     Solver *solver;
     Mesh *mesh;
-    IntTemp *temporal; 
+    IntTemp *intTemp; 
 
   public:
 
-    CellHeatLoop(Solver *solver, Mesh *mesh, IntTemp *temporal) {
+    CellHeatLoop(Solver *solver, Mesh *mesh, IntTemp *intTemp) {
       this->solver = solver;
       this->mesh = mesh;
-      this->temporal = temporal;
+      this->intTemp = intTemp;
     }
 
     void montaSistema(void);

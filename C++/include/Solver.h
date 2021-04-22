@@ -19,6 +19,6 @@ class Solver {
 
     void set_dataStruct(DataStruct* data) { this->data = data; }
 
-    double* solver(double *x){return x;};
+    virtual double* solver(double *x)=0;
 };
 

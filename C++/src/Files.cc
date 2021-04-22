@@ -16,7 +16,7 @@
  *----------------------------------------------------------------------------- *
  * TriSolver:                                                                   *
  * Mesh:                                                                        *
- * temporal:                                                                    *
+ * intTemp:                                                                    *
  * ---------------------------------------------------------------------------- *
  * OBS:                                                                         *
  * ---------------------------------------------------------------------------- *
@@ -48,7 +48,7 @@ void Files::openOutputFile(void) {
  * Parametros de entrada:                                                       *
  * ---------------------------------------------------------------------------- *
  * mesh     -                                                                   *
- * temporal -                                                                   *
+ * intTemp -                                                                   *
  * ---------------------------------------------------------------------------- *
  * Parametros de saida:                                                         *
  * ---------------------------------------------------------------------------- *
@@ -57,12 +57,12 @@ void Files::openOutputFile(void) {
  *----------------------------------------------------------------------------- *
  * TriSolver:                                                                   *
  * Mesh:                                                                        *
- * temporal:                                                                    *
+ * intTemp:                                                                    *
  * ---------------------------------------------------------------------------- *
  * OBS:                                                                         *
  * ---------------------------------------------------------------------------- *
  ********************************************************************************/
-void Files::read(Mesh &mesh, IntTemp &temporal) {
+void Files::read(Mesh &mesh, IntTemp &intTemp) {
   ifstream file;
   string name = this->get_nameIn();
 
@@ -100,12 +100,12 @@ void Files::read(Mesh &mesh, IntTemp &temporal) {
 
     else if (word == "dt") {
       file >> dValue;
-      temporal.set_dt(dValue);
+      intTemp.set_dt(dValue);
     }
 
     else if (word == "nstep") {
       file >> iValue;
-      temporal.set_nStep(iValue);
+      intTemp.set_nStep(iValue);
     }
 
     else if (word == "cce") {

@@ -3,7 +3,7 @@
 #include<iostream>
 #include<fstream>
 
-#include"Temporal.h"
+#include"IntTemp.h"
 #include"Mesh.h"
 
 
@@ -45,6 +45,6 @@ class Files {
       fileOutNode.close();
     }
 
-    void read(Mesh &mesh, IntTemp &temporal);
+    void read(Mesh &mesh, IntTemp &intTemp);
     // .......................................................................... 
 };

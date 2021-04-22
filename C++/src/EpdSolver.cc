@@ -18,14 +18,14 @@
  *------------------------------------------------------------------  *
  * TriSolver:                                                         *
  * Mesh:                                                              *
- * temporal:                                                          *
+ * intTemp:                                                          *
  * ------------------------------------------------------------------ *
  * OBS:                                                               *
  * ------------------------------------------------------------------ *
  *********************************************************************/
 void EpdSolver::solver(Files &files){
 
-  int nStep = temporal->get_nStep();
+  int nStep = intTemp->get_nStep();
   double *uCell = mesh->getCells().getPu();
 
   // ...
@@ -41,8 +41,8 @@ void EpdSolver::solver(Files &files){
 
   // ...
   times.init_timer();
-  mesh->resNode(files.get_fileOutNode(), *temporal);
-  mesh->resCell(files.get_fileOutCell(), *temporal);
+  mesh->resNode(files.get_fileOutNode(), *intTemp);
+  mesh->resCell(files.get_fileOutCell(), *intTemp);
   times.updateResTimer();
   // ............................................................................
 
@@ -51,7 +51,7 @@ void EpdSolver::solver(Files &files){
   for (int j = 0; j < nStep; j++) {
 
     // ...
-    temporal->updateTime();
+    intTemp->updateTime();
     // ..........................................................................
 
     // ...
@@ -72,8 +72,8 @@ void EpdSolver::solver(Files &files){
 
     // ...
     times.init_timer();
-    mesh->resNode(files.get_fileOutNode(), *temporal);
-    mesh->resCell(files.get_fileOutCell(), *temporal);
+    mesh->resNode(files.get_fileOutNode(), *intTemp);
+    mesh->resCell(files.get_fileOutCell(), *intTemp);
     times.updateResTimer();
     // ..........................................................................   
 
@@ -100,7 +100,7 @@ void EpdSolver::solver(Files &files){
  *----------------------------------------------------------------------------- *
  * TriSolver:                                                                   *
  * Mesh:                                                                        *
- * temporal:                                                                    *
+ * intTemp:                                                                    *
  * ---------------------------------------------------------------------------- *
  * OBS:                                                                         *
  * ---------------------------------------------------------------------------- *
@@ -121,7 +121,7 @@ void EpdSolver::init(void) {
   this->mesh->getNodes().set_u(u0, nCells);
 
   //
-  this->temporal->set_iStep(0);
-  this->temporal->set_t(0.0e0);
+  this->intTemp->set_iStep(0);
+  this->intTemp->set_t(0.0e0);
 }
 // ******************************************************************************

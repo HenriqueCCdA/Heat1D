@@ -6,11 +6,11 @@
 #include<algorithm>
 #include<iomanip>
 
-#include "Node.h"
-#include "Cell.h"
-#include "CcCi.h"
-#include "Prop.h"
-#include "Temporal.h"
+#include"Node.h"
+#include"Cell.h"
+#include"CcCi.h"
+#include"Prop.h"
+#include"IntTemp.h"
 
 using namespace std;
 
@@ -21,7 +21,7 @@ class Mesh{
     Node nodes;
     Cell cells;  
     CcCi  ccci;    
-    IntTemp temporal;
+    IntTemp *intTemp;
     PropRef propRef;
     
     static void writeResLine(ofstream &file, int c1, double c2, double *cs, int nCs) {
@@ -35,7 +35,9 @@ class Mesh{
     }
   public:
 
-    Mesh(){}
+    Mesh(IntTemp *intTemp){
+      this->intTemp = intTemp;
+    }
 
     // ... getters
     PropRef& getPropRef(void) { return this->propRef; }
@@ -66,11 +68,11 @@ class Mesh{
 
     void nodalInterpol(void);
 
-    void resNode(ofstream &file, IntTemp &temporal); 
+    void resNode(ofstream &file, IntTemp &intTemp); 
     
     void writeGeomNode(ofstream &file); 
 
-    void resCell(ofstream &file, IntTemp &temporal);
+    void resCell(ofstream &file, IntTemp &intTemp);
 
     void writeGeomCell(ofstream &file); 
     // ..........................................................................

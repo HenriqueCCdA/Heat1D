@@ -13,12 +13,12 @@ Memoria mem;
 int main(int argc, char *argv[]) {
 
   Files files;
-  Mesh mesh;
-  IntTemp temporal;
+  IntTemp intTemp;
+  Mesh mesh(&intTemp);
 
   // ... 
   files.set_nameIn("temperatura.dat");
-  files.read(mesh, temporal);
+  files.read(mesh, intTemp);
   mesh.display();
   // ............................................................................
 
@@ -32,11 +32,11 @@ int main(int argc, char *argv[]) {
   // ............................................................................
 
   // ...
-  CellLoop *heatCell1D = new CellHeatLoop(solver, &mesh, &temporal);
+  CellLoop *heatCell1D = new CellHeatLoop(solver, &mesh, &intTemp);
   // ............................................................................
 
   // 
-  EpdSolver epd(&mesh, &temporal, heatCell1D, solver);
+  EpdSolver epd(&mesh, &intTemp, heatCell1D, solver);
   // ............................................................................
   
   //

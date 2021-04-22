@@ -25,8 +25,8 @@ void Mesh::display(void) {
 
   cout << "length   " << this->get_l() << endl;
   cout << "ndiv     " << this->cells.get_nCells() << endl;
-  cout << "dt       " << this->temporal.get_dt() << endl;
-  cout << "nstep    " << this->temporal.get_nStep() << endl;
+  cout << "dt       " << this->intTemp->get_dt() << endl;
+  cout << "nstep    " << this->intTemp->get_nStep() << endl;
   cout << "ccd      " << this->ccci.get_cceType() << " "
     << this->ccci.get_cceValue() << endl;
   cout << "ccd      " << this->ccci.get_ccdType() << " "
@@ -203,9 +203,9 @@ void Mesh::nodalInterpol(void) {
  * OBS:                                                               *
  * ------------------------------------------------------------------ *
  *********************************************************************/
-void Mesh::resNode(ofstream &file, IntTemp &temporal) {
+void Mesh::resNode(ofstream &file, IntTemp &intTemp) {
 
-  writeResLine(file, temporal.get_iStep(), temporal.get_t(),
+  writeResLine(file, intTemp.get_iStep(), intTemp.get_t(),
     this->getNodes().getPu(), this->get_nNodes());
 
 }
@@ -236,9 +236,9 @@ void Mesh::writeGeomNode(ofstream &file) {
  * OBS:                                                               *
  * ------------------------------------------------------------------ *
  *********************************************************************/
-void Mesh::resCell(ofstream &file, IntTemp &temporal) {
+void Mesh::resCell(ofstream &file, IntTemp &intTemp) {
 
-  writeResLine(file, temporal.get_iStep(), temporal.get_t(),
+  writeResLine(file, intTemp.get_iStep(), intTemp.get_t(),
     this->getCells().getPu(), this->get_nCells());
 
 }

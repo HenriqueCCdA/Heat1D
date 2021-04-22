@@ -1,5 +1,11 @@
 #include"../include/CellLoop.h"
 
+static void cc(double &aL   , double &aD, double &aU, double &b
+              , double rho   , double cp , double k1 , double k2 
+              , double dx    , double dt , double u
+              , short cceType, double cceValue, char c);
+
+
 /**********************************************************************
  * Data de Ciacao:       18/04/2021                                   *
  * Data de Modificacao : 20/04/2021                                   *
@@ -31,7 +37,7 @@
  *       |_ cceValue - valor de condicao de contorno esquerda         *
  *       |_ ccdType  - tipo de condicao de contorno direita           *
  *       |_ ccdValue - valor de condicao de contorno esquerda         *
- * temporal                                                           *
+ * intTemp                                                           *
  * |_ dt - delta t                                                    *
  * ------------------------------------------------------------------ *
  * OBS:                                                               *
@@ -39,13 +45,13 @@
  *********************************************************************/
 void CellHeatLoop::montaSistema(void){
   // ...
-  double aP0, sU, sP, kf, aE, aW;
+  double aP0, kf, aE, aW;
   // ..
   double *rho = this->mesh->getCells().getProp().get_rho();
   double *cp = this->mesh->getCells().getProp().get_cp();
   double *k = this->mesh->getCells().getProp().get_k();
   // ...
-  double dt = this->temporal->get_dt();
+  double dt = this->intTemp->get_dt();
   double dx = this->mesh->getCells().get_dx();
   // ...
   int cceType = this->mesh->getCcci().get_cceType(),
@@ -62,57 +68,22 @@ void CellHeatLoop::montaSistema(void){
   int nCells = this->mesh->get_nCells(), n;
   // ..........................................................................
 
-  // ... temperatura prescrita
-  if (cceType == 1) {
-    aP0 = rho[0] * cp[0] * dx / dt;
-    sU = (2.0e0*k[0] / dx)*cceValue;
-    sP = -2.0e0*k[0] / dx;
-    kf = (k[0] + k[1])*0.5e0;
-    aE = kf / dx;
-    // ... W
-    aL[0] = 0.0;
-    // ... P
-    aD[0] = aP0 + aE - sP;
-    // ... E
-    aU[0] = -aE;
-    // c ...
-    b[0] = sU + aP0 * u[0];
-  }
-  // ... fluxo prescrito
-  else if (cceType == 2) {
+  // ... Lado esquerdo
+  cc(aL[0]  , aD[0], aU[0], b[0],
+     rho[0] , cp[0], k[0] , k[1],
+     dx     , dt   , u[0],
+     cceType, cceValue, 'e');
+  // ............................................................................
 
-  }
-  // ... lei de resfriamento de newton
-  else if (cceType == 3) {
 
-  }
-
-  // ... temperatura prescrita
+  // ... Lado direito
   n = nCells - 1;
-  if (ccdType == 1) {
-    aP0 = rho[n] * cp[n] * dx / dt;
-    sU = (2.0e0*k[n] / dx)*ccdValue;
-    sP = -2.0e0*k[n] / dx;
-    kf = (k[n - 1] + k[n])*0.5e0;
-    aW = kf / dx;
-    // ... W
-    aL[n] = -aW;
-    // ... P
-    aD[n] = aP0 + aW - sP;
-    // ... E
-    aU[n] = 0.0e0;
-    // c ...
-    b[n] = sU + aP0 * u[n];
-  }
-  // ... fluxo prescrito
-  else if (ccdType == 2) {
-
-  }
-  // ... lei de resfriamento de newton
-  else if (ccdType == 3) {
-
-  }
-
+  cc(aL[n], aD[n], aU[n], b[n],
+    rho[n], cp[n],  k[n], k[n-1],
+    dx, dt, u[n],
+    ccdType, ccdValue, 'd');
+  // ............................................................................
+ 
   // ... loop nas celulas do interios
   for (int i = 1; i < nCells - 1; i++) {
     aP0 = rho[i] * cp[i] * dx / dt;
@@ -132,3 +103,38 @@ void CellHeatLoop::montaSistema(void){
   // ..........................................................................
 }
 //*****************************************************************************
+
+/*********************************************************************/
+static void cc(double &aL, double &aD, double &aU, double &b
+  , double rho, double cp, double kP, double kV
+  , double dx, double dt, double u
+  , short ccType, double ccValue, char c) {
+
+  double aP0, sU, sP, kf, aWorE;
+
+  // ... temperatura prescrita
+  if (ccType == 1) {
+    aP0 = rho * cp * dx / dt;
+    sU = (2.0e0*kP / dx)*ccValue;
+    sP = -2.0e0*kP / dx;
+    kf = (kP + kV)*0.5e0;
+    aWorE = kf / dx;
+    // ... W
+    aL = -((c == 'e') ? -0.0: aWorE);
+    // ... P
+    aD = aP0 + aWorE - sP;
+    // ... E
+    aU = -((c == 'd') ? -0.0 : aWorE);
+    // c ...
+    b = sU + aP0 * u;
+  }
+  // ... fluxo prescrito
+  else if (ccType == 2) {
+
+  }
+  // ... lei de resfriamento de newton
+  else if (ccType == 3) {
+
+  }
+}
+/*********************************************************************/

@@ -5,7 +5,7 @@
 #include"Files.h"
 #include"Mesh.h"
 #include"Prop.h"
-#include"Temporal.h"
+#include"IntTemp.h"
 #include"CellLoop.h"
 
 using namespace std;
@@ -14,16 +14,16 @@ class EpdSolver {
 
   private:
     Mesh *mesh; 
-    IntTemp *temporal;
+    IntTemp *intTemp;
     CellLoop *cellLoop;
     Solver *solverEq;
   
   public:
 
-    EpdSolver(Mesh *mesh, IntTemp *temporal,
+    EpdSolver(Mesh *mesh, IntTemp *intTemp,
               CellLoop *cellLoop, Solver *solver) {
       this->mesh = mesh;
-      this->temporal = temporal;      
+      this->intTemp = intTemp;      
       this->cellLoop = cellLoop;
       this->solverEq = solver;
     }
