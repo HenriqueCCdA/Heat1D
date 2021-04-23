@@ -5,9 +5,9 @@
 #include"../include/CellLoop.h"
 #include"../include/RunTimes.h"
 #include"../include/GerenciadoDeMemoria.h"
+#include"../include/GlobalVar.h"
 
-RunTimes times;
-Memoria mem;
+
 
 
 int main(int argc, char *argv[]) {
