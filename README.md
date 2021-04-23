@@ -6,6 +6,7 @@ Solução do equação do calor utilizando o método dos volumes finitos para pr
 * Fortran
 * Python (puro)
 * Python (numpy)
+* C++
 
 # Equação resolvida
 
@@ -80,11 +81,11 @@ A dimensão da domínio é 50 unidades. Todas as propriedades fisicas são consi
 A Tabela 1 mostra que o codigo em Fortran e certa de 100 vezes mais rápido que a sua versão em python.
 
 *Tabela 1*
-|nDiv           | Fortran       |  Python  |
-|             - |              -|        - |
-|1.000          |0.054          | 7.1844   |
-|10.000         |0.543          | 57.0355  |
-|100.000        |4.970          |566.2701  |
+|nDiv           | Fortran       |  Python  |   C++ |
+|             - |              -|        - |     - |
+|1.000          |0.054          | 7.1844   | 0.0381|
+|10.000         |0.543          | 57.0355  | 0.407 |
+|100.000        |4.970          |566.2701  | 4.5165|
 
 # Referencia
 
