@@ -1,4 +1,5 @@
-#pragma once
+#ifndef CELLLOOP_H
+#define CELLLOOP_H
 
 #include"Mesh.h"
 #include"Solver.h"
@@ -33,3 +34,4 @@ class CellHeatLoop: public CellLoop{
     void montaSistema(void);
 
 };
+#endif

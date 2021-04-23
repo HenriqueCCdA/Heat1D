@@ -1,4 +1,6 @@
-#pragma once
+#ifndef FILES_H
+#define FILES_H
+
 #include<string>
 #include<iostream>
 #include<fstream>
@@ -48,3 +50,6 @@ class Files {
     void read(Mesh &mesh, IntTemp &intTemp);
     // .......................................................................... 
 };
+
+
+#endif

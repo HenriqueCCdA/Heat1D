@@ -1,4 +1,7 @@
-#pragma once
+#ifndef RUNTIMES_H
+#define RUNTIMES_H
+//#pragma once
+
 #include"../include/HccaTimeCc.h"
 
 class RunTimes: TimeCc {
@@ -38,3 +41,5 @@ class RunTimes: TimeCc {
 };
 
 extern RunTimes times;
+
+#endif

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef INTTEMP_H
+#define INTTEMP_H
 
 class IntTemp {
 
@@ -34,3 +35,4 @@ class IntTemp {
     // ..........................................................................
 
 };
+#endif

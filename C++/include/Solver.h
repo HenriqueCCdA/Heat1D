@@ -1,4 +1,6 @@
-#pragma once
+#ifndef SOLVER_H
+#define SOLVER_H
+
 
 #include"../include/GerenciadoDeMemoria.h"
 #include"../include/DataStruct.h"
@@ -21,4 +23,4 @@ class Solver {
 
     virtual double* solver(double *x)=0;
 };
-
+#endif

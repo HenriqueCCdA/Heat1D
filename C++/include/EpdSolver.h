@@ -1,4 +1,5 @@
-#pragma once
+#ifndef EPDSOLVER_H
+#define EPDSOLVER_H
 
 #include<iostream>
 
@@ -33,3 +34,4 @@ class EpdSolver {
     void solver(Files &files);
 
 };
+#endif

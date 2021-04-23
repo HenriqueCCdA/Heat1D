@@ -1,4 +1,5 @@
-#pragma once
+#ifndef PROP_H
+#define  PROP_H
 
 #include"../include/GerenciadoDeMemoria.h"
 
@@ -69,4 +70,4 @@ public:
   }
   // ..........................................................................
 };
-
+#endif

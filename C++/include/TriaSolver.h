@@ -1,4 +1,5 @@
-#pragma once
+#ifndef TRIASOLVER_H
+#define TRIASOLVER_H
 
 #include"Solver.h"
 
@@ -35,3 +36,4 @@ public:
   // ..........................................................................
 };
 
+#endif

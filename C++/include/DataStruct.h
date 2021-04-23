@@ -1,4 +1,5 @@
-#pragma once
+#ifndef DATASTRUCT_H
+#define DATASTRUCT_H
 
 class DataStruct {
 
@@ -64,3 +65,4 @@ public:
   }
 
 };
+#endif

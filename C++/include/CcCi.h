@@ -1,4 +1,5 @@
-#pragma once
+#ifndef CCCI_H
+#define CCCI_H
 
 enum typeCc { temp = 1, flux = 2, hConv = 3 };
 
@@ -47,3 +48,4 @@ class CcCi {
     double get_cciValue(void) { return this->cciValue; }
     // ..........................................................................
 };
+#endif

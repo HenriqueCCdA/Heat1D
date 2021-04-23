@@ -1,4 +1,5 @@
-#pragma once
+#ifndef GMEM_H
+#define GMEM_H
 
 #include<iostream>
 
@@ -31,3 +32,5 @@ class Memoria {
 
 
 extern Memoria mem;
+
+#endif

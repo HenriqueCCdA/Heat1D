@@ -1,4 +1,5 @@
-#pragma once
+#ifndef MESH_H
+#define MESH_H
 
 #include<fstream>
 #include<iostream>
@@ -77,3 +78,5 @@ class Mesh{
     void writeGeomCell(ofstream &file); 
     // ..........................................................................
 };
+
+#endif
