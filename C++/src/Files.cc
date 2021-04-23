@@ -109,20 +109,38 @@ void Files::read(Mesh &mesh, IntTemp &intTemp) {
     }
 
     else if (word == "cce") {
-
+      int n = 0;
+      double vValue[2];
       file >> iValue;
       mesh.getCcci().set_cceType(iValue);
-
-      file >> dValue;
-      mesh.getCcci().set_cceValue(dValue);
+      if(iValue == typeCc::hConv){
+        file >> vValue[0];
+        file >> vValue[1];
+        n = 2;
+      }
+      else {
+        file >> vValue[0];
+        n = 1;
+      }
+      mesh.getCcci().set_cceValue(vValue, n);
     }
 
     else if (word == "ccd") {
+      int n = 0;
+      double vValue[2];
       file >> iValue;
       mesh.getCcci().set_ccdType(iValue);
 
-      file >> dValue;
-      mesh.getCcci().set_ccdValue(dValue);
+      if (iValue == typeCc::hConv) {
+        file >> vValue[0];
+        file >> vValue[1];
+        n = 2;
+      }
+      else {
+        file >> vValue[0];
+        n = 1;
+      }
+      mesh.getCcci().set_ccdValue(vValue, n);
     }
 
     else if (word == "initialt") {

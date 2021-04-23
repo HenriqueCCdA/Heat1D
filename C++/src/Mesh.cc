@@ -177,10 +177,10 @@ void Mesh::nodalInterpol(void) {
   // ......................................................................
 
   // ...
-  if (this->ccci.get_cceType() == 1)
-    nodeU[0] = this->ccci.get_cceValue();
-  if (this->ccci.get_ccdType() == 1)
-    nodeU[nNodes - 1] = this->ccci.get_ccdValue();
+  if (this->ccci.get_cceType() == typeCc::temp)
+    nodeU[0] = this->ccci.get_cceValue(0);
+  if (this->ccci.get_ccdType() == typeCc::temp)
+    nodeU[nNodes - 1] = this->ccci.get_ccdValue(0);
   // ......................................................................
 }
 /**********************************************************************/

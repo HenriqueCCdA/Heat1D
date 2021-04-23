@@ -4,6 +4,9 @@
 #include"Solver.h"
 #include"IntTemp.h"
 
+
+enum cc { cce = 1, ccd = 2 };
+
 class CellLoop {
 
   public:

@@ -1,14 +1,14 @@
 #include"../include/CellLoop.h"
 
-static void cc(double &aL   , double &aD, double &aU, double &b
-              , double rho   , double cp , double k1 , double k2 
-              , double dx    , double dt , double u
-              , short cceType, double cceValue, char c);
+static void cc(double &aL, double &aD, double &aU, double &b
+      , double rho, double cp, double kP, double kV
+      , double dx, double dt, double u
+      , short ccType, double *aCcValue, short c);
 
 
 /**********************************************************************
  * Data de Ciacao:       18/04/2021                                   *
- * Data de Modificacao : 20/04/2021                                   *
+ * Data de Modificacao : 22/04/2021                                   *
  * -------------------------------------------------------------------*
  * montaSistema: loop nas celulas para montar os sistema de equacoes  *
  * -------------------------------------------------------------------*
@@ -20,7 +20,7 @@ static void cc(double &aL   , double &aD, double &aU, double &b
  * ------------------------------------------------------------------ *
  * Objetos utilizados:                                                *
  *------------------------------------------------------------------  *
- * TriSolver:                                                         *
+ * DataStrucr:                                                        *
  *  |_ l[neq] - diagonal inferior  (alterado)                         *
  *  |_ d[neq] - diagonal principal (alterado)                         *
  *  |_ u[neq] - diagonal superio   (alterado)                         *
@@ -55,9 +55,9 @@ void CellHeatLoop::montaSistema(void){
   double dx = this->mesh->getCells().get_dx();
   // ...
   int cceType = this->mesh->getCcci().get_cceType(),
-    ccdType = this->mesh->getCcci().get_ccdType();
-  double cceValue = this->mesh->getCcci().get_cceValue(),
-    ccdValue = this->mesh->getCcci().get_ccdValue();
+      ccdType = this->mesh->getCcci().get_ccdType();
+  double *cceValue = this->mesh->getCcci().get_cceValue(),
+         *ccdValue = this->mesh->getCcci().get_ccdValue();
   double *u = this->mesh->getCells().getPu();
   // ... sistema de equacoes
   double *aU = this->solver->get_dataStruct()->get_a3(),
@@ -71,17 +71,17 @@ void CellHeatLoop::montaSistema(void){
   // ... Lado esquerdo
   cc(aL[0]  , aD[0], aU[0], b[0],
      rho[0] , cp[0], k[0] , k[1],
-     dx     , dt   , u[0],
-     cceType, cceValue, 'e');
+     dx     , dt   , u[0],  
+     cceType, cceValue, cce);
   // ............................................................................
 
 
   // ... Lado direito
   n = nCells - 1;
-  cc(aL[n], aD[n], aU[n], b[n],
-    rho[n], cp[n],  k[n], k[n-1],
-    dx, dt, u[n],
-    ccdType, ccdValue, 'd');
+  cc(aL[n] , aD[n]   , aU[n], b[n],
+    rho[n] , cp[n]   ,  k[n], k[n-1],
+    dx     , dt      , u[n],
+    ccdType, ccdValue, ccd);
   // ............................................................................
  
   // ... loop nas celulas do interios
@@ -104,37 +104,81 @@ void CellHeatLoop::montaSistema(void){
 }
 //*****************************************************************************
 
-/*********************************************************************/
+/********************************************************************************
+ * Data de Ciacao:       22/04/2021                                             *
+ * Data de Modificacao : 00/00/0000                                             *
+ * ---------------------------------------------------------------------------- *
+ * cc: aplicao da condicoes de contorno                                         *
+ * ---------------------------------------------------------------------------- *
+ * Parametros de entrada:                                                       *
+ * ---------------------------------------------------------------------------- *
+ * aL      - termo diagonal inverior                                            *
+ * aD      - termo diagonal principal                                           *
+ * aU      - termo diagonal superio                                             *
+ * b       - termo vetor de forcas                                              *
+ * rho     - massa especifica                                                   *
+ * cp      - calor especifico                                                   *
+ * kP      - coeficiente de difusao da celula central                           *
+ * kV      - coeficiente de difusao da celula vizina                            *
+ * h       - coeficiente de calor convectivo                                    *
+ * dx      - tamanho da celula                                                  *
+ * dt      - passo de tempo                                                     *
+ * u       - valor da solução do passo de tempo anterior                        *
+ * ccType  - tipo da condicao de contorno                                       *
+ * ccValue - parametros da condicao de contorno                                 *
+ * ---------------------------------------------------------------------------- *
+ * Parametros de saida:                                                         *
+ * ---------------------------------------------------------------------------- *
+ * aL      - termo diagonal inverior                                            *
+ * aD      - termo diagonal principal                                           *
+ * aU      - termo diagonal superio                                             *
+ * b       - termo vetor de forcas                                              *
+ * ---------------------------------------------------------------------------- *
+ * Objetos utilizados:                                                          *
+ *----------------------------------------------------------------------------- *
+ * ---------------------------------------------------------------------------- *
+ * OBS:                                                                         *
+ * ---------------------------------------------------------------------------- *
+ ********************************************************************************/
 static void cc(double &aL, double &aD, double &aU, double &b
-  , double rho, double cp, double kP, double kV
-  , double dx, double dt, double u
-  , short ccType, double ccValue, char c) {
+             , double rho, double cp, double kP, double kV
+             , double dx, double dt, double u
+             , short ccType, double *aCcValue, short c) {
 
   double aP0, sU, sP, kf, aWorE;
+  double ccValue = aCcValue[0];
 
+  aP0 = rho * cp * dx / dt;
+  kf = (kP + kV)*0.5e0;
+  aWorE = kf / dx;
   // ... temperatura prescrita
-  if (ccType == 1) {
-    aP0 = rho * cp * dx / dt;
+  if (ccType == typeCc::temp) {
     sU = (2.0e0*kP / dx)*ccValue;
     sP = -2.0e0*kP / dx;
-    kf = (kP + kV)*0.5e0;
-    aWorE = kf / dx;
-    // ... W
-    aL = -((c == 'e') ? -0.0: aWorE);
-    // ... P
-    aD = aP0 + aWorE - sP;
-    // ... E
-    aU = -((c == 'd') ? -0.0 : aWorE);
-    // c ...
-    b = sU + aP0 * u;
   }
   // ... fluxo prescrito
-  else if (ccType == 2) {
-
+  else if (ccType == typeCc::flux) {
+    sU    = -ccValue;
+    sP    = 0.0;
   }
   // ... lei de resfriamento de newton
-  else if (ccType == 3) {
-
+  else if (ccType == typeCc::hConv) {
+    double h = aCcValue[1];
+    double tmp = 1.e0 + (h*2.e0*dx)/kP;
+    tmp = h/tmp;
+    sU = tmp*ccValue;
+    sP = -tmp;
   }
+  // ............................................................................
+
+  // ... W
+  aL = -((c == cce) ? -0.0 : aWorE);
+  // ... P
+  aD = aP0 + aWorE - sP;
+  // ... E
+  aU = -((c == ccd) ? -0.0 : aWorE);
+  // c ...
+  b = sU + aP0 * u;
+  // ............................................................................
 }
-/*********************************************************************/
+/******************************************************************************/
