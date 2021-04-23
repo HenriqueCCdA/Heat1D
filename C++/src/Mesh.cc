@@ -27,10 +27,10 @@ void Mesh::display(void) {
   cout << "ndiv     " << this->cells.get_nCells() << endl;
   cout << "dt       " << this->intTemp->get_dt() << endl;
   cout << "nstep    " << this->intTemp->get_nStep() << endl;
-  cout << "ccd      " << this->ccci.get_cceType() << " "
-    << this->ccci.get_cceValue() << endl;
+  cout << "cce      " << this->ccci.get_cceType() << " "
+    << this->ccci.get_cceValue(0) << endl;
   cout << "ccd      " << this->ccci.get_ccdType() << " "
-    << this->ccci.get_ccdValue() << endl;
+    << this->ccci.get_ccdValue(0) << endl;
   cout << "initialt " << this->ccci.get_cciValue() << endl;
   cout << "prop     " << this->propRef.get_rho() << " "
     << this->propRef.get_cp() << " "
