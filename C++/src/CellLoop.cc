@@ -8,7 +8,7 @@ static void cc(double &aL, double &aD, double &aU, double &b
 
 /**********************************************************************
  * Data de Ciacao:       18/04/2021                                   *
- * Data de Modificacao : 22/04/2021                                   *
+ * Data de Modificacao : 23/04/2021                                   *
  * -------------------------------------------------------------------*
  * montaSistema: loop nas celulas para montar os sistema de equacoes  *
  * -------------------------------------------------------------------*
@@ -60,10 +60,11 @@ void CellHeatLoop::montaSistema(void){
          *ccdValue = this->mesh->getCcci().get_ccdValue();
   double *u = this->mesh->getCells().getPu();
   // ... sistema de equacoes
-  double *aU = this->solver->get_dataStruct()->get_a3(),
-         *aD = this->solver->get_dataStruct()->get_a2(),
-         *aL = this->solver->get_dataStruct()->get_a1(),
-          *b = this->solver->get_dataStruct()->get_b();
+  TriaDiagonal *triaDiagonal = (TriaDiagonal*) this->solver->get_dataStruct();
+  double *aU = triaDiagonal->get_u(),
+         *aD = triaDiagonal->get_d(),
+         *aL = triaDiagonal->get_l(),
+          *b = triaDiagonal->get_b();
   // ...
   int nCells = this->mesh->get_nCells(), n;
   // ..........................................................................

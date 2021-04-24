@@ -14,11 +14,6 @@ public:
   // ..........................................................................
 
   // ... getters
-  virtual double* get_a1(void) = 0;
-  virtual double* get_a2(void) = 0;
-  virtual double* get_a3(void) = 0;
-  virtual double* get_a4(void) = 0;
-  virtual double* get_b(void) = 0;
   virtual int get_n(void) { return n; };
   // ..........................................................................
 
@@ -46,13 +41,11 @@ public:
   // ... getters
   int get_n(void) { return this->DataStruct::get_n(); }
 
-  double* get_a1(void) { return this->l; }
+  double* get_l(void) { return this->l; }
 
-  double* get_a2(void) { return this->d; }
+  double* get_d(void) { return this->d; }
 
-  double* get_a3(void) { return this->u; }
-
-  double* get_a4(void) { return nullptr; }
+  double* get_u(void) { return this->u; }
 
   double* get_b(void) { return this->b; }
   // ..........................................................................

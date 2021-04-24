@@ -79,7 +79,7 @@ void TriaDiagonal::alloc(void) {
 
 /*********************************************************************************
  * Data de criacao    : 18/04/2021                                               *
- * Data de modificaco : 00/00/0000                                               *
+ * Data de modificaco : 23/04/2021                                               *
  * ----------------------------------------------------------------------------- *
  * tdma : resolucao de sistemas tridiagonais                                     *
  * ----------------------------------------------------------------------------- *
@@ -117,13 +117,13 @@ void TriaDiagonal::alloc(void) {
  ********************************************************************************/
 double* TriSolver::tdma(double *x) {
   int nEq = this->get_nEq();
-
-  double *l = this->get_dataStruct()->get_a1(),
-    *d = this->get_dataStruct()->get_a2(),
-    *u = this->get_dataStruct()->get_a3(),
-    *b = this->get_dataStruct()->get_b(),
-    *um = this->um,
-    *bm = this->bm;
+  TriaDiagonal *triaDiagonal = (TriaDiagonal*) this->get_dataStruct();
+  double *u  = triaDiagonal->get_u(),
+         *d  = triaDiagonal->get_d(),
+         *l  = triaDiagonal->get_l(),
+          *b = triaDiagonal->get_b();
+  double *um = this->um,
+         *bm = this->bm;
 
   // ...
   for (int i = 0; i < nEq; i++) {
