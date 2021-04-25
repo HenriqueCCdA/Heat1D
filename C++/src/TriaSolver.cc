@@ -1,32 +1,13 @@
 #include"../include/TriaSolver.h"
 
 /******************************************************************************
- * Data de Ciacao:       18/04/2021                                           *
- * Data de Modificacao : 20/04/2021                                           *
- * -------------------------------------------------------------------------- *
- * alloc: allocacoa da memoria utilizada no solver Tridiagonal                *
- * -------------------------------------------------------------------------- *
- * Parametros de entrada:                                                     *
- * -------------------------------------------------------------------------- *
- * x(neq)   - vetor independente                                              *
- * -------------------------------------------------------------------------- *
- * Parametros de saida:                                                       *
- * -------------------------------------------------------------------------- *
- * x(neq) - vetor solucao                                                     *
- * -------------------------------------------------------------------------- *
- * Objetos utilizados:                                                        *
- *--------------------------------------------------------------------------- *
- * TriSolver:                                                                 *
- * l[neq]   - diagonal inferior  (alocado)                                    *
- * d[neq]   - diagonal principal (alocado)                                    *
- * u[neq]   - diagonal superio   (alocado)                                    *
- * b[neq]   - vetor independente (alocado)                                    *
- *um[neq]   - vetor auxiliar     (alocado)                                    *
- *bm[neq]   - vetor auxiliar     (alocado)                                    *
- * -------------------------------------------------------------------------- *
- * OBS:                                                                       *
- * -------------------------------------------------------------------------- *
- ******************************************************************************/
+ *@brief     Allocação da memoria utilizada no solver Tridiagonal.     
+ *@details   Allocação da memoria utilizada no solver Tridiagonal. <!--     
+ *--> São alocados os arranjos axiliares bm e um.
+ ******************************************************************************         
+ *@date      19/04/2021 - 25/04/2021
+ *@author    Henrique C. C. de Andrade
+ *******************************************************************************/
 void TriSolver::alloc(void) {
 
   int n = this->get_nEq();
@@ -35,34 +16,15 @@ void TriSolver::alloc(void) {
   this->um = mem.alloc<double>(n);
 
 }
-//*******************************************************************************
+//*****************************************************************************
 
 /******************************************************************************
- * Data de Ciacao:       18/04/2021                                           *
- * Data de Modificacao : 00/00/0000                                           *
- * -------------------------------------------------------------------------- *
- * alloc: allocacoa da memoria utilizada no solver Tridiagonal                *
- * -------------------------------------------------------------------------- *
- * Parametros de entrada:                                                     *
- * -------------------------------------------------------------------------- *
- * x(neq)   - vetor independente                                              *
- * -------------------------------------------------------------------------- *
- * Parametros de saida:                                                       *
- * -------------------------------------------------------------------------- *
- * x(neq) - vetor solucao                                                     *
- * -------------------------------------------------------------------------- *
- * Objetos utilizados:                                                        *
- *--------------------------------------------------------------------------- *
- * TriSolver:                                                                 *
- * l[neq]   - diagonal inferior  (alocado)                                    *
- * d[neq]   - diagonal principal (alocado)                                    *
- * u[neq]   - diagonal superio   (alocado)                                    *
- * b[neq]   - vetor independente (alocado)                                    *
- *um[neq]   - vetor auxiliar     (alocado)                                    *
- *bm[neq]   - vetor auxiliar     (alocado)                                    *
- * -------------------------------------------------------------------------- *
- * OBS:                                                                       *
- * -------------------------------------------------------------------------- *
+ *@brief     Allocação da memoria utilizada na estrutura de dados tridiagonal.
+ *@details   Allocação da memoria utilizada no solver Tridiagonal. <!--
+ *-->        São alocados os arranjos axiliares bm e um.
+ ******************************************************************************
+ *@date      19/04/2021 - 25/04/2021
+ *@author    Henrique C. C. de Andrade
  ******************************************************************************/
 void TriaDiagonal::alloc(void) {
 
@@ -76,44 +38,30 @@ void TriaDiagonal::alloc(void) {
 }
 //*******************************************************************************
 
-
-/*********************************************************************************
- * Data de criacao    : 18/04/2021                                               *
- * Data de modificaco : 23/04/2021                                               *
- * ----------------------------------------------------------------------------- *
- * tdma : resolucao de sistemas tridiagonais                                     *
- * ----------------------------------------------------------------------------- *
- * Parametros de entrada:                                                        *
- * ----------------------------------------------------------------------------- *
- * x(neq)   - vetor independente                                                 *
- * ----------------------------------------------------------------------------- *
- * Parametros de saida:                                                          *
- * ----------------------------------------------------------------------------- *
- * x(neq) - vetor solucao                                                        *
- * ----------------------------------------------------------------------------- *
- * Objetos utilizados:                                                           *
- *------------------------------------------------------------------------------ *
- * TriSolver:                                                                    *
- * l[neq]   - diagonal inferior  (inalterado)                                    *
- * d[neq]   - diagonal principal (inalterado)                                    *
- * u[neq]   - diagonal superio   (inalterado)                                    *
- * b[neq]   - vetor independente (inalterado)                                    *
- *um[neq]   - vetor auxiliar                                                     *
- *bm[neq]   - vetor auxiliar                                                     *
- * ----------------------------------------------------------------------------- *
- * OBS:                                                                          *
- * ----------------------------------------------------------------------------- *
- * | d1 u1  0  0  0 | |x1| |b1|                                                  *
- * | l2 d2 u2  0  0 | |x2| |b2|                                                  *
- * | 0  l3 d3 u3  0 |*|x3|=|b3|                                                  *
- * | 0   0 l4 d4 u4 | |x4| |b4|                                                  *
- * | 0   0  0 l5 d5 | |x5| |b5|                                                  *
- *                                                                               *
- * l = [  0 l2 l3 l4 l5]                                                         *
- * d = [ d1 d2 d3 d4 d5]                                                         *
- * u = [ u1 u2 u3 u4  0]                                                         *
- *                                                                               *
- * fonte: https://en.wikipedia.org/wiki/Tridiagonal_matrix_algorithm             *
+/********************************************************************************
+ *@brief     Resolução de sistemas de equação tridiagonal.
+ *@details   Resolução de sistemas de equação tridiagonal.                                              
+ *********************************************************************************
+ *@date      2021-2021
+ *@author    Henrique C. C. de Andrade
+ ********************************************************************************
+ * @note
+ * Sistema de equações:    
+ * <pre>
+ *          A        * X  = b                                             
+ * | d1 u1  0  0  0 | |x1| |b1|                                           
+ * | l2 d2 u2  0  0 | |x2| |b2|                                           
+ * | 0  l3 d3 u3  0 |*|x3|=|b3|                                           
+ * | 0   0 l4 d4 u4 | |x4| |b4|                                           
+ * | 0   0  0 l5 d5 | |x5| |b5|                                           
+ * </pre>                                                                       
+ *  Estrutura de dados:
+ *  <pre>
+ *  l = [  0 l2 l3 l4 l5]                                                 
+ *  d = [ d1 d2 d3 d4 d5]                                                 
+ *  u = [ u1 u2 u3 u4  0]                                                 
+ *  </pre>                                                                       
+ * fonte: https://en.wikipedia.org/wiki/Tridiagonal_matrix_algorithm           
  ********************************************************************************/
 double* TriSolver::tdma(double *x) {
   int nEq = this->get_nEq();

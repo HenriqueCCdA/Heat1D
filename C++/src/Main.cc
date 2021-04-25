@@ -8,8 +8,6 @@
 #include"../include/GerenciadoDeMemoria.h"
 
 #include"../include/GlobalVar.h"
-//RunTimes times;
-//Memoria mem;
 
 int main(int argc, char *argv[]) {
 

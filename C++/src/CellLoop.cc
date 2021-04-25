@@ -5,44 +5,15 @@ static void cc(double &aL, double &aD, double &aU, double &b
       , double dx, double dt, double u
       , short ccType, double *aCcValue, short c);
 
-
-/**********************************************************************
- * Data de Ciacao:       18/04/2021                                   *
- * Data de Modificacao : 23/04/2021                                   *
- * -------------------------------------------------------------------*
- * montaSistema: loop nas celulas para montar os sistema de equacoes  *
- * -------------------------------------------------------------------*
- * Parametros de Entrada:                                             *
- * -------------------------------------------------------------------*
- * -------------------------------------------------------------------*
- * Parametros de Saida:                                               *
- * -------------------------------------------------------------------*
- * ------------------------------------------------------------------ *
- * Objetos utilizados:                                                *
- *------------------------------------------------------------------  *
- * DataStrucr:                                                        *
- *  |_ l[neq] - diagonal inferior  (alterado)                         *
- *  |_ d[neq] - diagonal principal (alterado)                         *
- *  |_ u[neq] - diagonal superio   (alterado)                         *
- *  |_ b[neq] - vetor independente (alterado)                         *
- * Mesh:                                                              *
- * |_ cells:                                                          *
- *    |_ u - valores da solucao por celula                            *
- * |  |_ prop:                                                        *
- * |     |_ rho - massa especifica                                    *
- * |     |_ cp  - calor especifico                                    *
- * |     |_ k   - coeficiente de difusao                              *
- * |_ cccci:                                                          *
- *       |_ cceType  - tipo de condicao de contorno esquerda          *
- *       |_ cceValue - valor de condicao de contorno esquerda         *
- *       |_ ccdType  - tipo de condicao de contorno direita           *
- *       |_ ccdValue - valor de condicao de contorno esquerda         *
- * intTemp                                                           *
- * |_ dt - delta t                                                    *
- * ------------------------------------------------------------------ *
- * OBS:                                                               *
- * ------------------------------------------------------------------ *
- *********************************************************************/
+/********************************************************************************
+ *@brief     Monta o sistema de equações atraves do loop nas celulas.
+ *@details   Monta o sistema de equações atraves do loop nas celulas. <!--
+ *-->        A estrutura de dados do sistema de equações é atualizado <!--
+ *-->        no final do método.
+ ********************************************************************************
+ *@date      19/04/2021 - 24/04/2021
+ *@author    Henrique C. C. de Andrade
+ ********************************************************************************/
 void CellHeatLoop::montaSistema(void){
   // ...
   double aP0, kf, aE, aW;
@@ -106,41 +77,27 @@ void CellHeatLoop::montaSistema(void){
 //*****************************************************************************
 
 /********************************************************************************
- * Data de Ciacao:       22/04/2021                                             *
- * Data de Modificacao : 00/00/0000                                             *
- * ---------------------------------------------------------------------------- *
- * cc: aplicao da condicoes de contorno                                         *
- * ---------------------------------------------------------------------------- *
- * Parametros de entrada:                                                       *
- * ---------------------------------------------------------------------------- *
- * aL      - termo diagonal inverior                                            *
- * aD      - termo diagonal principal                                           *
- * aU      - termo diagonal superio                                             *
- * b       - termo vetor de forcas                                              *
- * rho     - massa especifica                                                   *
- * cp      - calor especifico                                                   *
- * kP      - coeficiente de difusao da celula central                           *
- * kV      - coeficiente de difusao da celula vizina                            *
- * h       - coeficiente de calor convectivo                                    *
- * dx      - tamanho da celula                                                  *
- * dt      - passo de tempo                                                     *
- * u       - valor da solução do passo de tempo anterior                        *
- * ccType  - tipo da condicao de contorno                                       *
- * ccValue - parametros da condicao de contorno                                 *
- * ---------------------------------------------------------------------------- *
- * Parametros de saida:                                                         *
- * ---------------------------------------------------------------------------- *
- * aL      - termo diagonal inverior                                            *
- * aD      - termo diagonal principal                                           *
- * aU      - termo diagonal superio                                             *
- * b       - termo vetor de forcas                                              *
- * ---------------------------------------------------------------------------- *
- * Objetos utilizados:                                                          *
- *----------------------------------------------------------------------------- *
- * ---------------------------------------------------------------------------- *
- * OBS:                                                                         *
- * ---------------------------------------------------------------------------- *
- ********************************************************************************/
+ *@brief     Função auxiliar para aplicar as condições de contorno.
+ *@details   Função auxiliar para aplicar as condições de contorno.
+ ********************************************************************************
+ *@param   aL      - termo diagonal inverior
+ *@param   aD      - termo diagonal principal
+ *@param   aU      - termo diagonal superio
+ *@param   b       - termo vetor de forcas
+ *@param   rho     - massa especifica
+ *@param   cp      - calor especifico
+ *@param   kP      - coeficiente de difusao da celula central
+ *@param   kV      - coeficiente de difusao da celula vizina
+ *@param   h       - coeficiente de calor convectivo
+ *@param   dx      - tamanho da celula
+ *@param   dt      - passo de tempo
+ *@param   u       - valor da solução do passo de tempo anterior
+ *@param   ccType  - tipo da condicao de contorno
+ *@param   ccValue - parametros da condicao de contorno      
+ ********************************************************************************
+ *@date      19/04/2021 - 24/04/2021
+ *@author    Henrique C. C. de Andrade
+ *******************************************************************************/
 static void cc(double &aL, double &aD, double &aU, double &b
              , double rho, double cp, double kP, double kV
              , double dx, double dt, double u

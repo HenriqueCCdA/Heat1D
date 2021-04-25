@@ -11,28 +11,67 @@
 
 using namespace std;
 
-
+/*******************************************************************************
+ *@class Files
+ *******************************************************************************
+ *@brief     A Classe que gerencia os arquivos. 
+ *@details    A Classe que gerencia os arquivo e entrada e saida. Operações <!--
+ *-->         de leitura e escrita
+ *******************************************************************************
+ *@date      19/04/2021 - 25/04/2021
+ *@author    Henrique C. C. de Andrade
+ *******************************************************************************/
 class Files {
 
   private:
-    string nameIn;
-    string nameOut;  
-    ofstream fileOutCell;
-    ofstream fileOutNode;
+    string nameIn;       /**< Nome do arquivo de entrada*/
+    string nameOut;      /**< Nome do arquivo de saida*/
+    ofstream fileOutCell;/**< Arquivo de escrita com os valores por célula*/
+    ofstream fileOutNode;/**< Arquivo de escrita com os valores por nó*/
 
   public:
 
-    Files(){}
-
     // ... setters
-    void set_nameOut(string value) { this->nameOut = value; }
-
-    void set_nameIn(string value) { this->nameIn = value; }
+    /***************************************************************************
+     * @brief Seta o nome do arquivo de saida
+     ***************************************************************************
+     * @param name - nome do arquivo
+     ***************************************************************************
+     * @date      19/04/2021 - 25/04/2021
+     * @author    Henrique C. C. de Andrade
+     ***************************************************************************/
+    void set_nameOut(string name) { this->nameOut = name; }
+    
+    /***************************************************************************
+     * @brief Seta o nome do arquivo de entrada
+     ***************************************************************************
+     * @param name - nome do arquivo
+     ***************************************************************************
+     * @date      19/04/2021 - 25/04/2021
+     * @author    Henrique C. C. de Andrade
+     ***************************************************************************/
+    void set_nameIn(string name) { this->nameIn = name; }
     // ..........................................................................
 
     // ... getters
+    /***************************************************************************
+     * @brief Obtém a referencia do arquivo de saida para escrita
+     ***************************************************************************
+     * @return - referencia para o arquivo
+     ***************************************************************************
+     * @date      19/04/2021 - 25/04/2021
+     * @author    Henrique C. C. de Andrade
+     ***************************************************************************/
     ofstream& get_fileOutNode() { return this->fileOutNode; }
 
+    /***************************************************************************
+     * @brief Obtém a referencia do arquivo de saida para escrita
+     ***************************************************************************
+     * @return - referencia para o arquivo
+     ***************************************************************************
+     * @date      19/04/2021 - 25/04/2021
+     * @author    Henrique C. C. de Andrade
+     ***************************************************************************/
     ofstream& get_fileOutCell() { return this->fileOutCell; }
 
     string get_nameOut(void) { return this->nameOut; }
@@ -43,8 +82,15 @@ class Files {
     // ... metodos
     void openOutputFile(void);
 
-    void closeOutputFile(void) {
+    /***************************************************************************
+     * @brief Fecha os arquivos de saida.
+     ***************************************************************************
+     * @date      19/04/2021 - 25/04/2021
+     * @author    Henrique C. C. de Andrade
+     ***************************************************************************/
+    void closeOutputFile(void) { 
       fileOutNode.close();
+      fileOutCell.close();
     }
 
     void read(Mesh &mesh, IntTemp &intTemp);
