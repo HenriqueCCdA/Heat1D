@@ -70,7 +70,7 @@ void Mesh::alloc() {
   // alocando os arranjos nodais
   this->nodes.alloc(this->nodes.get_nNodes());
 
-  // alocando os arranjos cell
+  // alocando os arranjos Cells
   this->cells.alloc(this->cells.get_nCells());
 
 }
@@ -105,10 +105,10 @@ void Mesh::grid(void) {
   int nCells = this->cells.get_nCells();
   int nNodes = this->nodes.get_nNodes();
 
-  double *x = this->nodes.getPx();
+  double *x = this->nodes.get_x();
   double dx = this->l / nCells;
 
-  this->getCells().set_dx(dx);
+  this->get_cells().set_dx(dx);
 
   // ...
   x[0] = 0.e0;
@@ -119,8 +119,8 @@ void Mesh::grid(void) {
 
 
   // ...
-  double *xc = this->cells.getPxc();
-  int    *nodes = this->cells.getPnodes();
+  double *xc = this->cells.get_xc();
+  int    *nodes = this->cells.get_nodes();
   for (int i = 0; i < nCells; i++) {
     nodes[2 * i] = i;
     nodes[2 * i + 1] = i + 1;
@@ -152,9 +152,9 @@ void Mesh::grid(void) {
 void Mesh::nodalInterpol(void) {
   int nCells = this->get_nCells();
   int nNodes = this->get_nNodes();
-  int *cells = this->getCells().getPnodes();
-  double *nodeU = this->getNodes().getPu();
-  double *cellU = this->getCells().getPu();
+  int *cells = this->get_cells().get_nodes();
+  double *nodeU = this->get_nodes().get_u();
+  double *cellU = this->get_cells().get_u();
 
   // ...
   for (int i = 0; i < nNodes; i++)
@@ -206,14 +206,14 @@ void Mesh::nodalInterpol(void) {
 void Mesh::resNode(ofstream &file, IntTemp &intTemp) {
 
   writeResLine(file, intTemp.get_iStep(), intTemp.get_t(),
-    this->getNodes().getPu(), this->get_nNodes());
+    this->get_nodes().get_u(), this->get_nNodes());
 
 }
 /**********************************************************************/
 
 void Mesh::writeGeomNode(ofstream &file) {
 
-  writeResLine(file, 0, 0.0, this->getNodes().getPx(), this->get_nNodes());
+  writeResLine(file, 0, 0.0, this->get_nodes().get_x(), this->get_nNodes());
 
 }
 /**********************************************************************/
@@ -239,7 +239,7 @@ void Mesh::writeGeomNode(ofstream &file) {
 void Mesh::resCell(ofstream &file, IntTemp &intTemp) {
 
   writeResLine(file, intTemp.get_iStep(), intTemp.get_t(),
-    this->getCells().getPu(), this->get_nCells());
+    this->get_cells().get_u(), this->get_nCells());
 
 }
 /**********************************************************************/
@@ -264,7 +264,7 @@ void Mesh::resCell(ofstream &file, IntTemp &intTemp) {
  *********************************************************************/
 void Mesh::writeGeomCell(ofstream &file) {
 
-  writeResLine(file, 0, 0.0, this->getCells().getPxc(), this->get_nCells());
+  writeResLine(file, 0, 0.0, this->get_cells().get_xc(), this->get_nCells());
 
 }
 /**********************************************************************/

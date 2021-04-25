@@ -66,8 +66,8 @@ void Files::read(Mesh &mesh, IntTemp &intTemp) {
 
     else if (word == "ndiv") {
       file >> iValue;
-      mesh.getCells().set_nCells(iValue);
-      mesh.getNodes().set_nNodes(iValue + 1);
+      mesh.get_cells().set_nCells(iValue);
+      mesh.get_nodes().set_nNodes(iValue + 1);
     }
 
     else if (word == "dt") {
@@ -84,7 +84,7 @@ void Files::read(Mesh &mesh, IntTemp &intTemp) {
       int n = 0;
       double vValue[2];
       file >> iValue;
-      mesh.getCcci().set_cceType(iValue);
+      mesh.get_ccci().set_cceType(iValue);
       if(iValue == typeCc::hConv){
         file >> vValue[0];
         file >> vValue[1];
@@ -94,14 +94,14 @@ void Files::read(Mesh &mesh, IntTemp &intTemp) {
         file >> vValue[0];
         n = 1;
       }
-      mesh.getCcci().set_cceValue(vValue, n);
+      mesh.get_ccci().set_cceValue(vValue, n);
     }
 
     else if (word == "ccd") {
       int n = 0;
       double vValue[2];
       file >> iValue;
-      mesh.getCcci().set_ccdType(iValue);
+      mesh.get_ccci().set_ccdType(iValue);
 
       if (iValue == typeCc::hConv) {
         file >> vValue[0];
@@ -112,23 +112,23 @@ void Files::read(Mesh &mesh, IntTemp &intTemp) {
         file >> vValue[0];
         n = 1;
       }
-      mesh.getCcci().set_ccdValue(vValue, n);
+      mesh.get_ccci().set_ccdValue(vValue, n);
     }
 
     else if (word == "initialt") {
       file >> dValue;
-      mesh.getCcci().set_cciValue(dValue);
+      mesh.get_ccci().set_cciValue(dValue);
     }
 
     else if (word == "prop") {
       file >> dValue;
-      mesh.getPropRef().set_rho(dValue);
+      mesh.get_propRef().set_rho(dValue);
 
       file >> dValue;
-      mesh.getPropRef().set_cp(dValue);
+      mesh.get_propRef().set_cp(dValue);
 
       file >> dValue;
-      mesh.getPropRef().set_k(dValue);
+      mesh.get_propRef().set_k(dValue);
     }
 
     else if (word == "end") {

@@ -6,7 +6,7 @@
 #include<iostream>
 using namespace std;
 
-class Node{
+class Nodes{
 
   private:
     int nNodes;
@@ -27,9 +27,9 @@ class Node{
     // ... getters
     int get_nNodes(void) { return this->nNodes; }
 
-    double* getPx() { return this->x; }
+    double* get_x() { return this->x; }
 
-    double* getPu() { return this->u; }
+    double* get_u() { return this->u; }
     // ..........................................................................
     
     // ... metodos
@@ -41,7 +41,7 @@ class Node{
 
 
     // ...
-    ~Node() {
+    ~Nodes() {
       mem.dealloc<double>(&this->x);
       mem.dealloc<double>(&this->u);
     }

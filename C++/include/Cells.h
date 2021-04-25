@@ -5,7 +5,7 @@
 
 
 /*******************************************************************************
- *@class Cell
+ *@class Cells
  *******************************************************************************
  *@brief     A Classe com as informações as células.
  *@details   Classe com as informações das células.             
@@ -14,11 +14,11 @@
  *@author    Henrique C. C. de Andrade
  *******************************************************************************/
 
-class Cell {
+class Cells {
 
   private:
     int nCells; /**< Número de células*/
-    int *nodes; /**< Conectividades nodais das células node[nCel,0] = no1 e node[nCel,1] = no2*/
+    int *nodes; /**< Conectividades nodais das células Nodes[nCel,0] = no1 e Nodes[nCel,1] = no2*/
     double *u;  /**< Valores do campo escalar*/
     double *xc; /**< Valores dos centroides*/
     double dx;  /**< Comprimento das celulas*/
@@ -82,7 +82,7 @@ class Cell {
       * @date      19/04/2021 - 25/04/2021
       * @author    Henrique C. C. de Andrade
       ***************************************************************************/
-    Prop& getProp() { return this->prop; }
+    Prop& get_prop() { return this->prop; }
 
     /***************************************************************************
       * @brief Retorna o número de células
@@ -102,7 +102,7 @@ class Cell {
     * @date      19/04/2021 - 25/04/2021
     * @author    Henrique C. C. de Andrade
     ***************************************************************************/
-    double* getPxc() { return this->xc; }
+    double* get_xc() { return this->xc; }
 
     /***************************************************************************
     * @brief Retorna o arranjos com os valores de u
@@ -112,7 +112,7 @@ class Cell {
     * @date      19/04/2021 - 25/04/2021
     * @author    Henrique C. C. de Andrade
     ***************************************************************************/
-    double* getPu() { return this->u; }
+    double* get_u() { return this->u; }
 
     /***************************************************************************
     * @brief Retorna o arranjos com os valores dos nos das células
@@ -122,7 +122,7 @@ class Cell {
     * @date      19/04/2021 - 25/04/2021
     * @author    Henrique C. C. de Andrade
     ***************************************************************************/
-    int* getPnodes() { return this->nodes; }
+    int* get_nodes() { return this->nodes; }
     // ..........................................................................
 
     // ... metodos
@@ -155,7 +155,7 @@ class Cell {
      * @date      19/04/2021 - 25/04/2021
      * @author    Henrique C. C. de Andrade
      ***************************************************************************/
-    ~Cell() {
+    ~Cells() {
       mem.dealloc<double>(&this->xc);
       mem.dealloc<double>(&this->u);
       mem.dealloc<int>(&this->nodes);

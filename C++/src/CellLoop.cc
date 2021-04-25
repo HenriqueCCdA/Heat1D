@@ -18,18 +18,18 @@ void CellHeatLoop::montaSistema(void){
   // ...
   double aP0, kf, aE, aW;
   // ..
-  double *rho = this->mesh->getCells().getProp().get_rho();
-  double *cp = this->mesh->getCells().getProp().get_cp();
-  double *k = this->mesh->getCells().getProp().get_k();
+  double *rho = this->mesh->get_cells().get_prop().get_rho();
+  double *cp = this->mesh->get_cells().get_prop().get_cp();
+  double *k = this->mesh->get_cells().get_prop().get_k();
   // ...
   double dt = this->intTemp->get_dt();
-  double dx = this->mesh->getCells().get_dx();
+  double dx = this->mesh->get_cells().get_dx();
   // ...
-  int cceType = this->mesh->getCcci().get_cceType(),
-      ccdType = this->mesh->getCcci().get_ccdType();
-  double *cceValue = this->mesh->getCcci().get_cceValue(),
-         *ccdValue = this->mesh->getCcci().get_ccdValue();
-  double *u = this->mesh->getCells().getPu();
+  int cceType = this->mesh->get_ccci().get_cceType(),
+      ccdType = this->mesh->get_ccci().get_ccdType();
+  double *cceValue = this->mesh->get_ccci().get_cceValue(),
+         *ccdValue = this->mesh->get_ccci().get_ccdValue();
+  double *u = this->mesh->get_cells().get_u();
   // ... sistema de equacoes
   TriaDiagonal *triaDiagonal = (TriaDiagonal*) this->solver->get_dataStruct();
   double *aU = triaDiagonal->get_u(),

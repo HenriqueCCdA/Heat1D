@@ -7,8 +7,8 @@
 #include<algorithm>
 #include<iomanip>
 
-#include"Node.h"
-#include"Cell.h"
+#include"Nodes.h"
+#include"Cells.h"
 #include"CcCi.h"
 #include"Prop.h"
 #include"IntTemp.h"
@@ -19,8 +19,8 @@ class Mesh{
   
   private:
     double l;
-    Node nodes;
-    Cell cells;  
+    Nodes nodes;
+    Cells cells;  
     CcCi  ccci;    
     IntTemp *intTemp;
     PropRef propRef;
@@ -41,17 +41,17 @@ class Mesh{
     }
 
     // ... getters
-    PropRef& getPropRef(void) { return this->propRef; }
+    PropRef& get_propRef(void) { return this->propRef; }
 
-    Cell& getCells(void) { return this->cells; }
+    Cells& get_cells(void) { return this->cells; }
 
-    Node& getNodes(void) { return this->nodes; }
+    Nodes& get_nodes(void) { return this->nodes; }
 
-    CcCi& getCcci(void) { return this->ccci; }
+    CcCi& get_ccci(void) { return this->ccci; }
 
-    int get_nCells(void) { return this->getCells().get_nCells(); }
+    int get_nCells(void) { return this->get_cells().get_nCells(); }
 
-    int get_nNodes(void) { return this->getNodes().get_nNodes(); }
+    int get_nNodes(void) { return this->get_nodes().get_nNodes(); }
 
     double get_l(void) { return this->l; }   
     // ..........................................................................

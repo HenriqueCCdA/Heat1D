@@ -26,7 +26,7 @@
 void EpdSolver::solver(Files &files){
 
   int nStep = intTemp->get_nStep();
-  double *uCell = mesh->getCells().getPu();
+  double *uCell = mesh->get_cells().get_u();
 
   // ...
   times.init_timer();
@@ -107,18 +107,18 @@ void EpdSolver::solver(Files &files){
  ********************************************************************************/
 void EpdSolver::init(void) {
 
-  int nCells = mesh->getCells().get_nCells();
-  double u0 = mesh->getCcci().get_cciValue();
-  PropRef propRef = this->mesh->getPropRef();
+  int nCells = mesh->get_cells().get_nCells();
+  double u0 = mesh->get_ccci().get_cciValue();
+  PropRef propRef = this->mesh->get_propRef();
 
   // ... iniciando as propriedades
-  this->mesh->getCells().getProp().init_prop(propRef, nCells);
+  this->mesh->get_cells().get_prop().init_prop(propRef, nCells);
 
   // ... iniciando as celulas
-  this->mesh->getCells().set_u(u0, nCells);
+  this->mesh->get_cells().set_u(u0, nCells);
 
   // ... iniciando os nodes
-  this->mesh->getNodes().set_u(u0, nCells);
+  this->mesh->get_nodes().set_u(u0, nCells);
 
   //
   this->intTemp->set_iStep(0);
