@@ -1,7 +1,7 @@
 #pragma once
 
-#include"../include/Prop.h"
-#include"../include/GerenciadoDeMemoria.h"
+#include"Prop.h"
+#include"GerenciadoDeMemoria.h"
 
 
 /*******************************************************************************

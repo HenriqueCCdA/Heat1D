@@ -7,6 +7,7 @@
 
 #include"IntTemp.h"
 #include"Mesh.h"
+#include"Error.h"
 
 
 using namespace std;

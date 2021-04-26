@@ -14,14 +14,14 @@ void Files::openOutputFile(void) {
   fileOutNode.open(name, ios::out);
   if (!fileOutNode.is_open()) {
     cout << name << " arquivo nao aberto !" << endl;
-    exit(-1);
+    exit(error::fileNotFound);
   }
 
   name = this->nameOut + "_cell.c++";
   fileOutCell.open(name, ios::out);
   if (!fileOutNode.is_open()) {
     cout << name << " arquivo nao aberto !" << endl;
-    exit(-1);
+    exit(error::fileNotFound);
   }
 }
 /********************************************************************************/
@@ -41,7 +41,7 @@ void Files::read(Mesh &mesh, IntTemp &intTemp) {
   file.open(name, ios::in);
   if (!file.is_open()) {
     cout << name << " arquivo nao achado !" << endl;
-    exit(-1);
+    exit(error::fileNotFound);
   }
 
   this->set_nameOut(name);

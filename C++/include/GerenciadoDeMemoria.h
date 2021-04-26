@@ -2,6 +2,7 @@
 #define GMEM_H
 
 #include<iostream>
+#include"Error.h"
 
 /*******************************************************************************
  *@class Memoria
@@ -31,15 +32,16 @@ class Memoria {
     template<typename T> T* alloc(size_t n) {
        T *p = nullptr;       
        
-       if (!n) {
-         std::cout << "Mem: Numero nulo de posicoes !!"<< std::endl;
-         exit(-1);
+       if (n<=0) {
+         std::cout << "Mem: Numero nulo ou negativo de posicoes !!"<< std::endl;
+         exit(error::dimArraySize);
        }
 
        p = new (std::nothrow) T[n];
+
        if (!p) {
           std::cout << "Mem: Arranjo nao pode ser alocado" << std::endl;
-          exit(-1);
+          exit(error::memory);
        }
        return p;       
     }

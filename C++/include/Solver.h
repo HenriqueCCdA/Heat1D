@@ -3,8 +3,8 @@
 
 #include<iostream>
 
-#include"../include/GerenciadoDeMemoria.h"
-#include"../include/DataStruct.h"
+#include"GerenciadoDeMemoria.h"
+#include"DataStruct.h"
 
 using namespace std;
 
