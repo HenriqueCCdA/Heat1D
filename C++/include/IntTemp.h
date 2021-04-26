@@ -1,14 +1,31 @@
 #ifndef INTTEMP_H
 #define INTTEMP_H
 
+
+/*******************************************************************************
+ *@class IntTemp
+ *******************************************************************************
+ *@brief  Classe com a integração temporal.
+ *******************************************************************************
+ *@date      19/04/2021 - 25/04/2021
+ *@author    Henrique C. C. de Andrade
+ *******************************************************************************/
 class IntTemp {
 
   private:    
-    int nStep, iStep;
-    double t, dt;
+    int nStep; /**< Número de passos de tempo*/
+    int iStep; /**< Passo de tempo*/
+    double t;  /**< Tempo total*/
+    double dt; /**< Delta T*/
 
   public:
 
+    /*******************************************************************************
+     *@details  Atualiza o passo de tempo e o tempo total.
+     *******************************************************************************
+     *@date      19/04/2021 - 25/04/2021
+     *@author    Henrique C. C. de Andrade
+     *******************************************************************************/
     void updateTime() {
       this->t += this->dt;
       this->iStep++;

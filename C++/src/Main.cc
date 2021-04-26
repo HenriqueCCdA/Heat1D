@@ -56,11 +56,11 @@ int main(int argc, char *argv[]) {
 
   // ...  
   cout << "Time Sist(s)   : " 
-       << fixed << setprecision(4) << times.getSist() << endl
+       << fixed << setprecision(4) << times.get_sist() << endl
        << "Time Solver(s) : " 
-       << fixed << setprecision(4) << times.getSolver() << endl
+       << fixed << setprecision(4) << times.get_solver() << endl
        << "Time Wres(s)   : " 
-       << fixed << setprecision(4) << times.getRes() << endl;
+       << fixed << setprecision(4) << times.get_res() << endl;
   // ............................................................................
 
   return 0;

@@ -19,7 +19,6 @@ void TriSolver::alloc(void) {
 //*****************************************************************************
 
 /******************************************************************************
- *@brief     Allocação da memoria utilizada na estrutura de dados tridiagonal.
  *@details   Allocação da memoria utilizada no solver Tridiagonal. <!--
  *-->        São alocados os arranjos axiliares bm e um.
  ******************************************************************************

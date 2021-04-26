@@ -3,6 +3,15 @@
 
 #include"../include/GerenciadoDeMemoria.h"
 
+/*******************************************************************************
+ *@class PropRef
+ *******************************************************************************
+ *@brief     Classe com as propriedade fisicas de referencia.
+ *@details   Esta classe guarda a propriedades físicas de referencia
+ *******************************************************************************
+ *@date      19/04/2021 - 25/04/2021
+ *@author    Henrique C. C. de Andrade
+ *******************************************************************************/
 class PropRef {
 
   private:
@@ -29,7 +38,7 @@ class PropRef {
 };
 
 /*******************************************************************************
- *@class Proper
+ *@class Prop
  *******************************************************************************
  *@brief     A Classe com as propriedade fisicas do dominio              
  *@details   A Classe com as propriedade fisicas do dominio 

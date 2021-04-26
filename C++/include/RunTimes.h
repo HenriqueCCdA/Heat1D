@@ -1,18 +1,34 @@
 #ifndef RUNTIMES_H
 #define RUNTIMES_H
-//#pragma once
 
 #include"../include/HccaTimeCc.h"
 
+/*******************************************************************************
+ *@class RunTimes
+ *******************************************************************************
+ *@brief Classe que gerencia a medição dos tempos.
+ *******************************************************************************
+ *@date      19/04/2021 - 25/04/2021
+ *@author    Henrique C. C. de Andrade
+ *******************************************************************************/
 class RunTimes: TimeCc {
 
   private:
-    double sist;
-    double solver;
-    double res;
+    double sist;  /**< Tempo levado da montagem do sistema de equações*/
+    double solver;/**< Tempo levado na solução do equações*/
+    double res;   /**< Tempo levado na escrita dos resultados*/
 
   public:
 
+    // ... Contrutor
+
+    /***************************************************************************
+    *@brief Contrutor
+    *@details Inicializa os tempos.
+    **************************************************************************
+    *@date      19/04/2021 - 25/04/2021
+    *@author    Henrique C. C. de Andrade
+    **************************************************************************/
     RunTimes() {
       this->sist = 0.e0;
       this->solver = 0.e0;
@@ -20,20 +36,63 @@ class RunTimes: TimeCc {
     }
 
     // .. getters
-    double getSist(void) { return this->sist; }
-    double getSolver(void) { return this->solver; }
-    double getRes(void) { return this->res; }
+
+    /*******************************************************************************
+    *@details  Obtém o valor de sist.
+    *******************************************************************************
+    *@return Retonar o tempo gasto na montagem do sistema.
+    *******************************************************************************
+    *@date      19/04/2021 - 25/04/2021
+    *@author    Henrique C. C. de Andrade
+    *******************************************************************************/
+    double get_sist(void) { return this->sist; }
+
+    /*******************************************************************************
+    *@details  Obtém o valor de solver.
+    *******************************************************************************
+    *@return Retonar o tempo gasto na solução do sistema de equações.
+    *******************************************************************************
+    *@date      19/04/2021 - 25/04/2021
+    *@author    Henrique C. C. de Andrade
+    *******************************************************************************/
+    double get_solver(void) { return this->solver; }
+
+    /*******************************************************************************
+    *@details  Obtém o valor de res.
+    *******************************************************************************
+    *@return Retonar o tempo gasto na escrita dos resultados.
+    *******************************************************************************
+    *@date      19/04/2021 - 25/04/2021
+    *@author    Henrique C. C. de Andrade
+    *******************************************************************************/
+    double get_res(void) { return this->res; }
     // ..........................................................................
 
     // ... metodos
+
+    /*******************************************************************************
+    *@brief     Inicia o cronometro
+    *******************************************************************************/
     void init_timer(void) { TimeCc::tic(); }
   
+    /*******************************************************************************
+    *@brief     Finaliza o cronometro
+    *******************************************************************************/
     double toc(void) { return TimeCc::toc(); }
 
+    /*******************************************************************************
+    *@brief  Atualiza o tempo da escrita dos resultados
+    *******************************************************************************/
     void updateResTimer(void) { this->res += toc(); }
 
+    /*******************************************************************************
+    *@brief  Atualiza o tempo do Solver
+    *******************************************************************************/
     void updateSolverTimer(void) { this->solver += toc(); }
-
+    
+    /*******************************************************************************
+    *@brief Atualiza o tempo da montagem do sistema de equações
+    *******************************************************************************/
     void updateSistTimer(void) { this->sist += toc(); }
     // ..........................................................................
 
