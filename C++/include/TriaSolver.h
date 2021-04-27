@@ -64,7 +64,7 @@ class TriSolver : public Solver {
     // ...metodos    
     void alloc(void);
 
-    double* solver(double *x) { return this->tdma(x); }  
+    double* solver(double *x) override { return this->tdma(x); }
     // ..........................................................................
 
     // ... detrutor

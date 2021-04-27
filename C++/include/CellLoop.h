@@ -60,7 +60,7 @@ class CellHeatLoop: public CellLoop{
       this->intTemp = intTemp;
     }
 
-    void montaSistema(void);
+    void montaSistema(void) override;
 
 };
 #endif
