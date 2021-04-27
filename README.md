@@ -1,4 +1,4 @@
-# VolumeFinito
+# Heat1D
 
 Solução do equação do calor utilizando o método dos volumes finitos para problemas unidimensionais. Objetivo é a comparação de uma implementação simples de volume finitos em diversas linguagem diferentes.
 
