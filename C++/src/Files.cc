@@ -1,5 +1,7 @@
 #include"../include/Files.h"
 
+static void writeResLine(ofstream &file, int c1, double c2, double *cs, int nCs);
+
  /******************************************************************************
   *@brief     Abre os arquivos de saida                            
   *@details   Abre os arquivos de saida para escrita dos resultados. <!--
@@ -143,3 +145,71 @@ void Files::read(Mesh &mesh, IntTemp &intTemp) {
 
 }
 /******************************************************************************/
+
+/******************************************************************************
+ *@details Escreve os resultado nodais.
+ ******************************************************************************
+ *@date      19/04/2021 - 25/04/2021
+ *@author    Henrique C. C. de Andrade
+ ******************************************************************************/
+void Files::resNode(Mesh &Mesh, IntTemp &intTemp) {
+
+  writeResLine(this->fileOutNode, intTemp.get_iStep(), intTemp.get_t(),
+    Mesh.get_nodes().get_u(), Mesh.get_nNodes());
+
+}
+/******************************************************************************/
+
+/******************************************************************************
+ *@details Escreve coordenada dos nós.
+ ******************************************************************************
+ *@date      19/04/2021 - 25/04/2021
+ *@author    Henrique C. C. de Andrade
+ ******************************************************************************/
+void Files::writeGeomNode(Mesh &mesh) {
+
+  writeResLine(this->fileOutNode, 0, 0.0, mesh.get_nodes().get_x()
+                , mesh.get_nNodes());
+
+}
+/**********************************************************************/
+
+/******************************************************************************
+ *@details  Escreve os resultado por células.
+ ******************************************************************************
+ *@date      19/04/2021 - 25/04/2021
+ *@author    Henrique C. C. de Andrade
+ ******************************************************************************/
+void Files::resCell(Mesh &mesh, IntTemp &intTemp) {
+
+  writeResLine(this->fileOutCell, intTemp.get_iStep(), intTemp.get_t(),
+    mesh.get_cells().get_u(), mesh.get_nCells());
+
+}
+/******************************************************************************/
+
+/******************************************************************************
+ *@details Escreve as coordenada dos centraiodes.
+ ******************************************************************************
+ *@date      19/04/2021 - 25/04/2021
+ *@author    Henrique C. C. de Andrade
+ ******************************************************************************/
+void Files::writeGeomCell(Mesh &mesh) {
+
+  writeResLine(this->fileOutCell, 0, 0.0, mesh.get_cells().get_xc()
+             , mesh.get_nCells());
+
+}
+/******************************************************************************/
+
+
+static void writeResLine(ofstream &file, int c1, double c2, double *cs, int nCs) {
+  
+  file << setw(8) << c1 << " "
+    << fixed << setw(12) << setprecision(4) << c2;
+
+  for (int i = 0; i < nCs; i++) {
+    file << " " << setprecision(7) << scientific << cs[i];
+  }
+  file << endl;
+}

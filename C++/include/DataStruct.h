@@ -24,7 +24,7 @@ public:
   // ..........................................................................
 
   // ... getters
-  virtual int get_n(void) { return n; };
+  int get_n(void) { return n; };
   // ..........................................................................
 
 
@@ -69,7 +69,7 @@ public:
   /******************************************************************************
    *@brief     Allocação da memoria utilizada na estrutura de dados tridiagonal.
   ***************************************************************************/
-  void alloc(void);
+  void alloc(void) override;
 
   // ... setters
   void set_n(int nEq) { this->DataStruct::set_n(nEq); }

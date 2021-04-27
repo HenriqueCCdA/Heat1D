@@ -17,8 +17,8 @@ void EpdSolver::solver(Files &files){
 
   // ...
   times.init_timer();
-  //mesh->writeGeomNode(files.get_fileOutNode());
-  //mesh->writeGeomCell(files.get_fileOutCell());
+  files.writeGeomNode(*this->mesh);
+  files.writeGeomCell(*this->mesh);
   times.updateResTimer();
   // ............................................................................
 
@@ -28,8 +28,8 @@ void EpdSolver::solver(Files &files){
 
   // ...
   times.init_timer();
-  //mesh->resNode(files.get_fileOutNode(), *intTemp);
-  //mesh->resCell(files.get_fileOutCell(), *intTemp);
+  files.resNode(*this->mesh, *intTemp);
+  files.resCell(*this->mesh, *intTemp);
   times.updateResTimer();
   // ............................................................................
 
@@ -59,8 +59,8 @@ void EpdSolver::solver(Files &files){
 
     // ...
     times.init_timer();
-    //mesh->resNode(files.get_fileOutNode(), *intTemp);
-    //mesh->resCell(files.get_fileOutCell(), *intTemp);
+    files.resNode(*this->mesh, *intTemp);
+    files.resCell(*this->mesh, *intTemp);
     times.updateResTimer();
     // ..........................................................................   
 

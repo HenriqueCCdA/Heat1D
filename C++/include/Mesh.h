@@ -31,17 +31,8 @@ class Mesh{
     Cells cells; /**< Céluas  da malha*/ 
     CcCi  ccci;  /**< Condicoes de contorno*/
     IntTemp *intTemp;
-    PropRef propRef;
-    
-    static void writeResLine(ofstream &file, int c1, double c2, double *cs, int nCs) {
-      file << setw(8) << c1 << " "
-           << fixed << setw(12) << setprecision(4) << c2;
+    PropRef propRef;  
 
-      for (int i = 0; i < nCs; i++) {
-        file << " " << setprecision(7) << scientific << cs[i];
-      }
-      file << endl;
-    }
   public:
 
     Mesh(IntTemp *intTemp){
@@ -87,28 +78,7 @@ class Mesh{
     /***************************************************************************
     *@brief Interpola valores das céluas para o nós.
     ***************************************************************************/
-    void nodalInterpol(void);
-
-    /***************************************************************************
-    *@brief Escreve os resultado nodais.
-    ***************************************************************************/
-    void resNode(ofstream &file, IntTemp &intTemp); 
-    
-    /***************************************************************************
-    *@brief Escreve coordenada dos nós.
-    ***************************************************************************/
-    void writeGeomNode(ofstream &file); 
-
-    /***************************************************************************
-    *@brief Escreve os resultado por células.
-    ***************************************************************************/
-    void resCell(ofstream &file, IntTemp &intTemp);
-
-    /***************************************************************************
-    *@brief Escreve as coordenada dos centraiodes.
-    ***************************************************************************/
-    void writeGeomCell(ofstream &file); 
-    // ..........................................................................
+    void nodalInterpol(void);    
 };
 
 #endif
