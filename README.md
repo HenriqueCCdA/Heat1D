@@ -78,7 +78,7 @@ A dimensão da domínio é 50 unidades. Todas as propriedades fisicas são consi
 
 # Comparação de tempos de excecução
 
-A Tabela 1 mostra que o codigo em Fortran e certa de 100 vezes mais rápido que a sua versão em python.
+A Tabela 1 mostra que o codigo em `Fortran` e cerca de `100 vezes` mais rápido que a sua versão em `Python`.
 
 *Tabela 1*
 |nDiv           | Fortran       |  Python  |   C++ |
